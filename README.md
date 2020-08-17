@@ -1,4 +1,7 @@
+[![Experimental Project header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#experimental)
+
 # V3-Nodetron
+
 A nodeJS tron for V3.
 
 Nodetron is compatible with the [V3-Deployer](https://github.com/newrelic/demo-deployer).
@@ -94,3 +97,12 @@ docker build -t nodetron .
 docker run -it --entrypoint npm nodetron test
 docker run -it -p 3001:3001 nodetron
 ```
+
+## Contributing
+
+We encourage your contributions to improve [project name]! Keep in mind when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. You only have to sign the CLA one time per project.
+If you have any questions, or to execute our corporate CLA, required if your contribution is on behalf of a company,  please drop us an email at opensource@newrelic.com.
+
+## License
+
+V3-Nodetron is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License. Nodetron also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the [third-party notices document](./engine/THIRD_PARTY_NOTICES.md).
