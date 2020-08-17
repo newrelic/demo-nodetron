@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Mon Aug 17 2020 18:55:17 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Mon Aug 17 2020 21:07:11 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nodetron",
   "projectUrl": "https://github.com/newrelic/demo-nodeapp/tree/main/engine",
   "includeDev": true,
@@ -14,6 +14,33 @@
       "licenseFile": "node_modules/dotenv/LICENSE",
       "licenseUrl": "https://github.com/motdotla/dotenv/blob/v8.2.0/LICENSE",
       "licenseTextSource": "file"
+    },
+    "eslint-plugin-jest@23.20.0": {
+      "name": "eslint-plugin-jest",
+      "version": "23.20.0",
+      "range": "^23.20.0",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/jest-community/eslint-plugin-jest",
+      "versionedRepoUrl": "https://github.com/jest-community/eslint-plugin-jest/tree/v23.20.0",
+      "licenseFile": "node_modules/eslint-plugin-jest/LICENSE",
+      "licenseUrl": "https://github.com/jest-community/eslint-plugin-jest/blob/v23.20.0/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "Jonathan Kim",
+      "email": "hello@jkimbo.com",
+      "url": "jkimbo.com"
+    },
+    "eslint@7.7.0": {
+      "name": "eslint",
+      "version": "7.7.0",
+      "range": "^7.7.0",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/eslint/eslint",
+      "versionedRepoUrl": "https://github.com/eslint/eslint/tree/v7.7.0",
+      "licenseFile": "node_modules/eslint/LICENSE",
+      "licenseUrl": "https://github.com/eslint/eslint/blob/v7.7.0/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "Nicholas C. Zakas",
+      "email": "nicholas+npm@nczconsulting.com"
     },
     "express@4.17.1": {
       "name": "express",
