@@ -1,9 +1,9 @@
 name: Test
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  job-checkout-and-build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -17,6 +17,17 @@ jobs:
       - name: NPM Lint
         working-directory: engine
         run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: engine
 
       - name: NPM Test
         working-directory: engine
