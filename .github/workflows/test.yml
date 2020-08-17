@@ -15,4 +15,5 @@ jobs:
           working-directory: engine
 
       - name: NPM Test
+        working-directory: engine
         run: npm run test
