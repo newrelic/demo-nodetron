@@ -1,0 +1,15 @@
+
+{
+  "id": "tron",
+  "port": 5000,
+  "dependencies": [
+    {
+      "id":"tron1",
+      "urls":["http://localhost:5001"]
+    },
+    {
+      "id":"tron2",
+      "urls":["http://localhost:5002"]
+    }
+  ]
+}

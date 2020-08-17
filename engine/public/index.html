@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Home</title>
+    <script src="inventory.js" language="javascript"></script>
+    <script src="controlpanel.js" language="javascript"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 class="logo">V3 Nodetron</h1>
+    </header>
+    <main>
+        <p>
+            Nullam id dolor id nibh ultricies vehicula ut id elit. Cras 
+            justo odio, dapibus ac facilisis in, egestas eget quam. 
+            Cras justo odio, dapibus ac facilisis in, egestas eget quam. 
+            Fusce dapibus, tellus ac cursus commodo, tortor mauris 
+            condimentum nibh, ut fermentum massa justo sit amet risus. 
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        </p>
+        <p>Maecenas faucibus <a href="#">mollis interdum</a>.</p>
+
+        <div class="cta-container">
+            <input type="button" id="submit" value="Get Inventory" class="button"></input>
+        </div>
+        <div id="inventory">
+        </div>
+        <div id="inventoryItem">
+        </div>
+    </main>
+    
+    <script>
+        function init() {
+            controlpanel.init(document.getElementById("submit"), document.getElementById("inventory"), document.getElementById("inventoryItem"))
+            inventory.init()
+        }
+
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                // document is ready. Do your stuff here
+                init()
+            }
+        }
+    </script>
+</body>
+</html>

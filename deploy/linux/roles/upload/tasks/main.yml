@@ -1,0 +1,26 @@
+---
+
+- debug:
+    msg: Upload {{ service_id }} service
+
+- fail:
+    msg: "service_id is required"
+  when: service_id is not defined
+
+- fail:
+    msg: "service_port is required"
+  when: service_port is not defined
+
+- include_tasks: sync_service.yml
+
+- name: Check app_config.json exist
+  stat:
+    path: ~/{{ service_id }}/config/app_config.json
+  register: app_config_exist
+
+- template:
+    src: deploy.config.j2
+    dest: ~/{{ service_id }}/config/app_config.json
+  when: app_config_exist.stat.exists == False
+
+- include_tasks: create_artifact_params.yml
