@@ -1,0 +1,18 @@
+name: Test
+
+on: [push]
+
+jobs:
+  job-checkout-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: engine
+
+      - name: NPM Test
+        run: npm run test
