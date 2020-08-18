@@ -3,18 +3,6 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Install Dependencies
-        uses: bahmutov/npm-install@v1
-        with:
-          working-directory: engine
-    
-
   test:
     runs-on: ubuntu-latest
     env:
@@ -55,15 +43,15 @@ jobs:
                       },
                       {
                         type: "mrkdwn",
-                        text: "*Branch:*\n${process.env.ref}"
+                        text: `*Branch:*\n${process.env.ref}`
                       },
                       {
                         type: "mrkdwn",
-                        text: "*Commit:*\n${process.env.AS_COMMIT}"
+                        text: `*Commit:*\n${process.env.AS_COMMIT}`
                       },
                       {
                         type: "mrkdwn",
-                        text: "*Message:*\n${process.env.AS_MESSAGE}"
+                        text: `*Message:*\n${process.env.AS_MESSAGE}`
                       },
                       {
                         type: "mrkdwn",
