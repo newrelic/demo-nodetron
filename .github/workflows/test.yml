@@ -44,7 +44,7 @@ jobs:
               username: "GitHub Actions",
               icon_emoji: ":octocat:",
               attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                color: '${{ job.status }}' === 'success' ? '#43cc11' : '${{ job.status }}' === 'failure' ? '#e05d44' : '#dfb317',
                 blocks: [
                   {
                     type: "section",
