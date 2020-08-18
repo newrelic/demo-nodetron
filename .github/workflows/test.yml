@@ -19,7 +19,8 @@ jobs:
           fields: commit,repo,ref,author,eventName,message
           custom_payload: |
             {
-              username: 'GitHub Actions',
+              username: "GitHub Actions",
+              icon_emoji: ":octocat:",
               attachments: [{
                 color: "warning",
                 blocks: [
@@ -35,19 +36,15 @@ jobs:
                     fields: [
                       {
                         type: "mrkdwn",
-                        text: `*Author*\n${process.env.AS_AUTHOR}`
-                      },
-                      {
-                        type: "mrkdwn",
-                        text: `*Type:*\n${process.env.AS_EVENT_NAME}`
-                      },
-                      {
-                        type: "mrkdwn",
-                        text: `*Branch:*\n${process.env.ref}`
-                      },
-                      {
-                        type: "mrkdwn",
                         text: `*Commit:*\n${process.env.AS_COMMIT}`
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: `*Author:*\n${process.env.AS_AUTHOR}`
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: `*Branch:*\n${process.env.AS_REF}`
                       },
                       {
                         type: "mrkdwn",
@@ -55,14 +52,27 @@ jobs:
                       },
                       {
                         type: "mrkdwn",
+                        text: `*Type:*\n${process.env.AS_EVENT_NAME}`
+                      },
+                      {
+                        type: "mrkdwn",
                         text: "*PR:*\n${{ github.event.pull_request.html_url }}"
                       }
-                    ],
-                    accessory: {
-                      type: "image",
-                      image_url: "https://avatars2.githubusercontent.com/in/15368",
-                      alt_text: "GitHub Actions"
-                    }
+                    ]
+                  },
+                  {
+                    type: "context",
+                    elements: [
+                      {
+                        type: "image",
+                        image_url: "https://avatars2.githubusercontent.com/in/15368",
+                        alt_text: "cute cat"
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: "This message was created automatically by GitHub Actions."
+                      }
+                    ]
                   }
                 ]
               }]
