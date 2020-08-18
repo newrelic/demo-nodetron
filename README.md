@@ -4,7 +4,7 @@
 
 A nodeJS tron for V3.
 
-Nodetron is compatible with the [V3-Deployer](https://github.com/newrelic/demo-deployer).
+Nodetron is compatible with the [Demo Deployer](https://github.com/newrelic/demo-deployer).
 
 It can be deployed with a similar configuration, and can participate in a tron chain with other trons like itself or other languages.
 The simulator can also be used to drive traffic to Nodetron.
