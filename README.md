@@ -37,7 +37,7 @@ The Nodetron configuration is located in a json configuration file, typically st
 }
 ```
 
-
+haha
 #### V3-Deployer
 
 Nodetron can be deployed with the V3-Deployer, and supports Logging and Logging in Context.
