@@ -13,22 +13,91 @@ jobs:
         uses: bahmutov/npm-install@v1
         with:
           working-directory: engine
-      
-      - name: NPM Lint
-        working-directory: engine
-        run: npm run lint
+    
 
   test:
     runs-on: ubuntu-latest
+    env:
+      SLACK_CHANNEL: demotron-bots
+      SLACK_USERNAME: GitHub Actions
+      SLACK_ICON: https://avatars2.githubusercontent.com/in/15368
+
     steps:
+      - name: Build Start Slack Notification
+        uses:  8398a7/action-slack@v3
+        with:
+          author_name: GitHub Actions
+          status: custom
+          fields: commit,repo,ref,author,eventName,message
+          custom_payload: |
+            {
+              username: 'GitHub Actions',
+              attachments: [{
+                color: "warning",
+                blocks: [
+                  {
+                    type: "section",
+                    text: {
+                      type: "mrkdwn",
+                      text: `Build for ${process.env.AS_REPO}`
+                    }
+                  },
+                  {
+                    type: "section",
+                    fields: [
+                      {
+                        type: "mrkdwn",
+                        text: `*Author*\n${process.env.AS_AUTHOR}`
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: `*Type:*\n${process.env.eventName}`
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: "*Branch:*\n${process.env.ref}"
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: "*Commit:*\n${process.env.AS_COMMIT}"
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: "*Message:*\n${process.env.AS_MESSAGE}"
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: "*PR:*\n${{ github.event_type == 'pull_request' ? github.event.pull_request.html_url : 'none' }}"
+                      }
+                    ],
+                    accessory: {
+                      type: "image",
+                      image_url: "https://avatars2.githubusercontent.com/in/15368",
+                      alt_text: "GitHub Actions"
+                    }
+                  }
+                ]
+              }]
+            }
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
       - name: Checkout repo
         uses: actions/checkout@v2
 
       - name: Install Dependencies
+        continue-on-error: true
         uses: bahmutov/npm-install@v1
         with:
           working-directory: engine
 
+      - name: NPM Lint
+        continue-on-error: true
+        working-directory: engine
+        run: npm run lint
+
       - name: NPM Test
+        continue-on-error: true
         working-directory: engine
         run: npm run test
