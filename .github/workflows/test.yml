@@ -88,7 +88,7 @@ jobs:
                       type: "mrkdwn",
                       text: [
                         "*Result:*",
-                        `• ${ ${{ steps.install.outcome == 'success' }} === true ? '✅' : '❌' } Install Dependencies: ${{ steps.install.outcome }}`,
+                        `• ${ ${{ steps.install.outcome == 'success' }} === true ? '✅' : '❌' } Install dependencies: ${{ steps.install.outcome }}`,
                         `• ${ ${{ steps.lint.outcome == 'success' }} === true ? '✅' : '❌' } Lint: ${{ steps.lint.outcome }}`,
                         `• ${ ${{ steps.test.outcome == 'success' }} === true ? '✅' : '❌' } Test: ${{ steps.test.outcome }}`
                       ].join('\n')
