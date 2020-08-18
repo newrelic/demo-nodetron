@@ -67,7 +67,7 @@ jobs:
                       },
                       {
                         type: "mrkdwn",
-                        text: "*PR:*\n${{ github.event_type == 'pull_request' ? github.event.pull_request.html_url : 'none' }}"
+                        text: "*PR:*\n${{ github.event.pull_request.html_url }}"
                       }
                     ],
                     accessory: {
