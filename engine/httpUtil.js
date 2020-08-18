@@ -3,6 +3,7 @@ const fetch = require("node-fetch")
 var logger = require("./logger")
 
 async function innerFetchJson(url, json, headers = []){
+  thing = console
   var method = "GET"
   var myHeaders = new fetch.Headers()
   myHeaders.append("Accept", "application/json")
