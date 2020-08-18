@@ -5,11 +5,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      SLACK_CHANNEL: demotron-bots
-      SLACK_USERNAME: GitHub Actions
-      SLACK_ICON: https://avatars2.githubusercontent.com/in/15368
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
