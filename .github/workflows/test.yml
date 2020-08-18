@@ -16,25 +16,25 @@ jobs:
 
       - name: Install Dependencies
         id: install
-        continue-on-error: true
         uses: bahmutov/npm-install@v1
         with:
           working-directory: engine
 
       - name: NPM Lint
         id: lint
-        continue-on-error: true
+        if: ${{ always() }}
         working-directory: engine
         run: npm run lint
 
       - name: NPM Test
         id: test
-        continue-on-error: true
+        if: ${{ always() }}
         working-directory: engine
         run: npm run test
       
       - name: Build Result Slack Notification
         uses:  8398a7/action-slack@v3
+        if: ${{ always() }}
         with:
           author_name: GitHub Actions
           status: custom
