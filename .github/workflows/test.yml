@@ -39,7 +39,7 @@ jobs:
                       },
                       {
                         type: "mrkdwn",
-                        text: `*Type:*\n${process.env.eventName}`
+                        text: `*Type:*\n${process.env.AS_EVENT_NAME}`
                       },
                       {
                         type: "mrkdwn",
