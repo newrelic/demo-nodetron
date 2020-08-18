@@ -78,7 +78,7 @@ jobs:
                       },
                       {
                         type: "mrkdwn",
-                        text: ${{ github.event_type == 'pull_request' }} === 'true' ? "*PR:*\n${{ github.event.pull_request.html_url }}" : undefined
+                        text: "*PR:*\n${{ github.event.pull_request.html_url }}"∂
                       }
                     ]
                   },
@@ -88,9 +88,9 @@ jobs:
                       type: "mrkdwn",
                       text: [
                         "*Result:*",
-                        `${ ${{ steps.install.outcome == 'success' }} === 'true' ? '✅' : '❌' } Install Dependencies Result: ${{ steps.install.outcome }}`,
-                        `${ ${{ steps.lint.outcome == 'success' }} === 'true' ? '✅' : '❌' } Lint Result: ${{ steps.lint.outcome }}`,
-                        `${ ${{ steps.test.outcome == 'success' }} === 'true' ? '✅' : '❌' } Test Result: ${{ steps.test.outcome }}`
+                        `${ ${{ steps.install.outcome == 'success' }} === true ? '✅' : '❌' } Install Dependencies Result: ${{ steps.install.outcome }}`,
+                        `${ ${{ steps.lint.outcome == 'success' }} === true ? '✅' : '❌' } Lint Result: ${{ steps.lint.outcome }}`,
+                        `${ ${{ steps.test.outcome == 'success' }} === true ? '✅' : '❌' } Test Result: ${{ steps.test.outcome }}`
                       ].join('\n')
                     }
                   },
