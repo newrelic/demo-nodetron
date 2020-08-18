@@ -11,7 +11,29 @@ jobs:
       SLACK_ICON: https://avatars2.githubusercontent.com/in/15368
 
     steps:
-      - name: Build Start Slack Notification
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        id: install
+        continue-on-error: true
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: engine
+
+      - name: NPM Lint
+        id: lint
+        continue-on-error: true
+        working-directory: engine
+        run: npm run lint
+
+      - name: NPM Test
+        id: test
+        continue-on-error: true
+        working-directory: engine
+        run: npm run test
+      
+      - name: Build Result Slack Notification
         uses:  8398a7/action-slack@v3
         with:
           author_name: GitHub Actions
@@ -22,7 +44,7 @@ jobs:
               username: "GitHub Actions",
               icon_emoji: ":octocat:",
               attachments: [{
-                color: "warning",
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 blocks: [
                   {
                     type: "section",
@@ -61,6 +83,18 @@ jobs:
                     ]
                   },
                   {
+                    type: "section",
+                    text: {
+                      type: "mrkdwn",
+                      text: [
+                        "*Result:*",
+                        `${ ${{ steps.install.outcome === 'success' }} === 'true' ? '✅' : '❌' } Install Dependencies Result: ${{ steps.install.outcome }}`,
+                        `${ ${{ steps.lint.outcome === 'success' }} === 'true' ? '✅' : '❌' } Lint Result: ${{ steps.lint.outcome }}`,
+                        `${ ${{ steps.test.outcome === 'success' }} === 'true' ? '✅' : '❌' } Test Result: ${{ steps.install.outcome }}`
+                      ].join('\n')
+                    }
+                  },
+                  {
                     type: "context",
                     elements: [
                       {
@@ -80,22 +114,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Install Dependencies
-        continue-on-error: true
-        uses: bahmutov/npm-install@v1
-        with:
-          working-directory: engine
-
-      - name: NPM Lint
-        continue-on-error: true
-        working-directory: engine
-        run: npm run lint
-
-      - name: NPM Test
-        continue-on-error: true
-        working-directory: engine
-        run: npm run test
