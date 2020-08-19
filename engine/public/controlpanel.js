@@ -3,16 +3,29 @@ controlpanel = window.controlpanel || {};
 var markup = []
 var _button = null
 
-controlpanel.init = function(button, divList, divItem){
+controlpanel.init = function(divIndex, button, divList, divItem){
+  _divIndex = divIndex
   _button = button
   _button.onclick = onClick
   _divList = divList
   _divItem = divItem
+  index.load( onIndexLoad )
 }
 
 controlpanel.display = function (response) {
   _divList.innerHTML = controls(response)
   _divItem.innerHTML = ""
+}
+
+controlpanel.displayIndex = function (response) {
+  markup = []
+  response.map(paragraph => markup.push(rowIndex(paragraph)) )
+  finalMarkup = `${markup.join("\n")}`
+  _divIndex.innerHTML = finalMarkup
+}
+
+function rowIndex(paragraph){
+  return `<p>${paragraph}</p>`
 }
 
 controlpanel.display_item = function (response) {
@@ -84,4 +97,8 @@ function onInventoryLoad(response) {
 
 function onInventoryItemLoad(response) {
   controlpanel.display_item(response)
+}
+
+function onIndexLoad(response) {
+  controlpanel.displayIndex(response)
 }

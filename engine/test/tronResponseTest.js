@@ -3,29 +3,28 @@ var tronResponse = require('../tronResponse')
 var appConfigTest = require('./appConfigTest')
 
 describe(`TronResponse Test`, function () {
-
     it(`should create default config before tron response`, function() {
-        TronResponseTest.givenTronResponse()
+        tron = TronResponseTest.givenTronResponse()
         assert.equal(appConfig.getAppId(), "identity1")
     })
 
     it(`should set and get trace header`, function() {
-        let tron = TronResponseTest.givenTronResponse()
+        tron = TronResponseTest.givenTronResponse()
         tron.setTraceHeader("me")
         assert.equal(tron.getTraceHeader(), "me")
     })
 
     it(`should get http request header value`, function() {
-        let tron = TronResponseTest.givenTronResponse()
-        let request = TronResponseTest.givenHttpRequest()
+        tron = TronResponseTest.givenTronResponse()
+        request = TronResponseTest.givenHttpRequest()
         request.set_header("X-DEMOTRON-TRACE", "abc123")
         var value = tron.getTraceHttpRequestHeader(request)
         assert.equal(value, "abc123")
     })
 
     it(`should get http reponse header value`, function() {
-        let tron = TronResponseTest.givenTronResponse()
-        let response = TronResponseTest.givenHttpResponse()
+        tron = TronResponseTest.givenTronResponse()
+        response = TronResponseTest.givenHttpResponse()
         response.set_header("X-DEMOTRON-TRACE", "abc123")
         var value = tron.getTraceHttpResponseHeader(response)
         assert.equal(value, "abc123")
@@ -34,40 +33,40 @@ describe(`TronResponse Test`, function () {
 
 
     it(`should not find header that is not passed in from caller`, function() {
-        let tron = TronResponseTest.givenTronResponse()
-        let request = TronResponseTest.givenHttpRequest()
-        tron.addDemoHeaders(request)
+        tron = TronResponseTest.givenTronResponse()
+        request = TronResponseTest.givenHttpRequest()
+        var added = tron.addDemoHeaders(request)
         assert.equal(tron.getHeader("X-DEMO-SOMETHING"), undefined)
     })
 
     it(`should find header that is passed in from caller`, function() {
-        let tron = TronResponseTest.givenTronResponse()
-        let request = TronResponseTest.givenHttpRequestWithHeader("X-DEMO-SOMETHING","1")
-        tron.addDemoHeaders(request)
+        tron = TronResponseTest.givenTronResponse()
+        request = TronResponseTest.givenHttpRequestWithHeader("X-DEMO-SOMETHING","1")
+        var added = tron.addDemoHeaders(request)
         assert.equal(tron.getHeader("X-DEMO-SOMETHING"), 1)
     })
 
 
     it(`should NOT add trace when not in request`, function() {
-        let tron = TronResponseTest.givenTronResponse()
-        let request = TronResponseTest.givenHttpRequest()
+        tron = TronResponseTest.givenTronResponse()
+        request = TronResponseTest.givenHttpRequest()
         var added = tron.addMyTraceHeader(request)
         assert.equal(added, false)
         assert.equal(tron.getTraceHeader(), undefined)
     })
 
     it(`should NOT add trace when not in request`, function() {
-        let tron = TronResponseTest.givenTronResponse()
-        let request = TronResponseTest.givenHttpRequest()
+        tron = TronResponseTest.givenTronResponse()
+        request = TronResponseTest.givenHttpRequest()
         var added = tron.addMyTraceHeader(request)
         assert.equal(added, false)
         assert.equal(tron.getTraceHeader(), undefined)
     })
 
     it(`should append downstream trace`, function() {
-        let tron = TronResponseTest.givenTronResponse()
+        tron = TronResponseTest.givenTronResponse()
         tron.setTraceHeader("me")
-        let response = TronResponseTest.givenHttpResponse()
+        response = TronResponseTest.givenHttpResponse()
         response.set_header("X-DEMOTRON-TRACE", "abc123")
         var added = tron.appendTrace(response)
         assert.equal(added, true)
