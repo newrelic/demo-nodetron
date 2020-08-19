@@ -2,6 +2,8 @@
 
 # Demo Nodetron
 
+![Test](https://github.com/newrelic/demo-nodetron/workflows/Test/badge.svg?event=push)
+
 A nodeJS tron for V3.
 
 Nodetron is compatible with the [Demo Deployer](https://github.com/newrelic/demo-deployer).
