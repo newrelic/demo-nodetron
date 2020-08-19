@@ -4,9 +4,9 @@
 
 ![Test](https://github.com/newrelic/demo-nodetron/workflows/Test/badge.svg?event=push)
 
-A nodeJS tron for V3.
+A nodeJS tron for the `demo` platform.
 
-Nodetron is compatible with the [Demo Deployer](https://github.com/newrelic/demo-deployer).
+Nodetron is compatible with the [demo-deployer](https://github.com/newrelic/demo-deployer).
 
 It can be deployed with a similar configuration, and can participate in a tron chain with other trons like itself or other languages.
 The simulator can also be used to drive traffic to Nodetron.
@@ -40,12 +40,11 @@ The Nodetron configuration is located in a json configuration file, typically st
 ```
 
 
-#### V3-Deployer
+#### Demo-Deployer
 
-Nodetron can be deployed with the V3-Deployer, and supports Logging and Logging in Context.
+Nodetron can be also be deployed with the [demo-deployer](https://github.com/newrelic/demo-deployer), and supports Logging and Logging in Context.
 Nodetron can also be instrumented with browser, using the same nodejs agent definition.
-Here is a V3-Deployer config example:
-
+Here is a deployer config example:
 
 ```json
 {
@@ -54,7 +53,7 @@ Here is a V3-Deployer config example:
       "id": "node1",
       "destinations": ["host1"],
       "display_name": "Nodetron",
-      "source_repository": "git@github.com:newrelic/demo-nodeapp.git",
+      "source_repository": "git@github.com:newrelic/demo-nodetron.git",
       "deploy_script_path": "/deploy/linux/roles",
       "port": 3002
     }
@@ -76,13 +75,6 @@ Here is a V3-Deployer config example:
         "source_repository": "git@github.com:newrelic/demo-instrumentation.git",
         "deploy_script_path": "deploy/node/linux/roles",
         "version": "6.4.1"
-      },
-      {
-        "id": "nr_logging_in_context",
-        "service_ids": ["node1"],
-        "provider": "newrelic",
-        "source_repository": "git@github.com:newrelic/demo-instrumentation.git",
-        "deploy_script_path": "deploy/logging_in_context/roles"
       }
     ]
   }
@@ -102,9 +94,9 @@ docker run -it -p 3001:3001 nodetron
 
 ## Contributing
 
-We encourage your contributions to improve V3-Nodetron! Keep in mind when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. You only have to sign the CLA one time per project.
+We encourage your contributions to improve demo-nodetron! Keep in mind when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. You only have to sign the CLA one time per project.
 If you have any questions, or to execute our corporate CLA, required if your contribution is on behalf of a company,  please drop us an email at opensource@newrelic.com.
 
 ## License
 
-V3-Nodetron is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License. Nodetron also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the [third-party notices document](./engine/THIRD_PARTY_NOTICES.md).
+demo-nodetron is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License. demo-nodetron also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the [third-party notices document](./engine/THIRD_PARTY_NOTICES.md).
