@@ -33,7 +33,7 @@ jobs:
         with:
           author_name: GitHub Actions
           status: custom
-          fields: commit,repo,ref,author,eventName,message
+          fields: commit,repo,ref,author,eventName,message,workflow
           custom_payload: |
             {
               username: "GitHub Actions",
