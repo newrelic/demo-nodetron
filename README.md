@@ -13,7 +13,7 @@ The simulator can also be used to drive traffic to Nodetron.
 
 ### Behaviors
 
-Nodetron supports the below behaviors. For more information, see the Behavior Documentation.
+Nodetron supports the below behaviors. For more information, see the [Behavior Documentation](https://github.com/newrelic/demo-deployer/tree/main/documentation/developer/behaviors)
 
 * Throw
 * Compute
