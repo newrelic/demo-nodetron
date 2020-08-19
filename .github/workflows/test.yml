@@ -74,6 +74,10 @@ jobs:
                       {
                         type: "mrkdwn",
                         text: "*PR:*\n${{ github.event.pull_request.html_url }}"
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: `*Workflow:*\n${ process.env.AS_WORKFLOW }`
                       }
                     ]
                   },
