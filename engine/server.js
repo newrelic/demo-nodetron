@@ -27,6 +27,9 @@ else{
   var inventoryRoute = require('./api/inventory/route')
   inventoryRoute(app)
 
+  var indexRoute = require('./api/index/route')
+  indexRoute(app)
+
   var messageRoute = require('./api/message/route')
   messageRoute(app)
 
