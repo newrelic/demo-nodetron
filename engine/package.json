@@ -1,7 +1,7 @@
 {
   "name": "nodetron",
   "version": "1.0.0",
-  "description": "A NodeJS server following the V3 tron model",
+  "description": "A NodeJS server following the demo (V3) tron model",
   "main": "server.js",
   "scripts": {
     "test": "mocha",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:newrelic/demo-instrumentation.git"
+    "url": "https://github.com/newrelic/demo-newrelic-instrumentation.git",
   },
   "keywords": [
     "node",
@@ -19,9 +19,11 @@
     "nodetron",
     "v3",
     "V3",
+    "demo-",
+    "demo-deployer",
     "demotron"
   ],
-  "author": "demotron",
+  "author": "newrelic",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",

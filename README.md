@@ -53,7 +53,7 @@ Here is a deployer config example:
       "id": "node1",
       "destinations": ["host1"],
       "display_name": "Nodetron",
-      "source_repository": "git@github.com:newrelic/demo-nodetron.git",
+      "source_repository": "https://github.com/newrelic/demo-nodetron.git",
       "deploy_script_path": "/deploy/linux/roles",
       "port": 3002
     }
@@ -72,7 +72,7 @@ Here is a deployer config example:
         "id": "nr_node_agent",
         "service_ids": ["node1"],
         "provider": "newrelic",
-        "source_repository": "git@github.com:newrelic/demo-instrumentation.git",
+        "source_repository": "https://github.com/newrelic/demo-newrelic-instrumentation.git",
         "deploy_script_path": "deploy/node/linux/roles",
         "version": "6.4.1"
       }
