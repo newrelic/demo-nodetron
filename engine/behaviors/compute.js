@@ -24,8 +24,8 @@ class Compute extends Behavior {
         }
 
         if (
-            parseInt(parsedValue[0]) === NaN ||
-            parseInt(parsedValue[1]) === NaN ||
+            isNaN(parseInt(parsedValue[0])) ||
+            isNaN(parseInt(parsedValue[1])) ||
             parsedValue[0] > parsedValue[1]
         ) {
             logger.warning(`Could not get valid compute parameters for behavior, min: ${parsedValue[0]} max: ${parsedValue[1]}`)
@@ -45,6 +45,7 @@ class Compute extends Behavior {
         while((new Date().getTime() - startTime) < duration) {
             for (let i = 0; i < 50; i++) {
                 for (let j = 0; j < i * 50; j++) {
+                    // eslint-disable-next-line
                     const n = new Date().getTime() / Math.pow(Math.PI, Math.ceil(Math.random() * 10))
                 }
             }
