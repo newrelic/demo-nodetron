@@ -25,6 +25,17 @@ p a {
   text-decoration: none;
 }
 
+li {
+  line-height: 10px;
+  color: #3E4C4C;
+}
+
+li a {
+  color: #008C99;
+  border-bottom: 1px dotted #008c998a;
+  text-decoration: none;
+}
+
 .logo {
   display: block;
   width: 393px;
