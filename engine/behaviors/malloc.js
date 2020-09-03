@@ -1,8 +1,11 @@
 'use strict'
+const { v4: uuidv4 } = require('uuid')
 const Behavior = require("./behavior")
 const logger = require('../logger')
 
 class Malloc extends Behavior {
+    static Allocated = []
+
     constructor(value) {
         super("MALLOC", value)
     }
@@ -36,9 +39,21 @@ class Malloc extends Behavior {
         const end = parsedValue[1]
         const numberKb = this.sample(start, end)
         logger.info(`Allocating ${numberKb}KB`)
+        this.allocateKB(numberKb)
         return true
     }
 
+    allocateKB(numberKb)
+    {
+        // 1KB is 64 guids (16 bytes)
+        var size = numberKb*64
+        var data = []
+        for (var index=0; index<size; index++)
+        {
+            data.push(uuidv4())
+        }
+        Malloc.Allocated.push(data)
+    }
 }
 
 module.exports = Malloc
