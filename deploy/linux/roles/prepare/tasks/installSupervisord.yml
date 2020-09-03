@@ -81,6 +81,10 @@
     when: localbinsupervisordfile.stat.exists == False  
     become: yes
 
+  - name: install superlance for memory restart
+    shell: '{{pip_path.stdout}} install -U superlance'
+    become: yes
+
   - name: Enable services for automatic start
     service:
       name: "{{ item }}"
