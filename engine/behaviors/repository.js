@@ -2,6 +2,7 @@
 const appConfig = require('../appConfig')
 const ThrowException = require('./throwException')
 const Compute = require('./compute')
+const Malloc = require('./malloc')
 
 class Repository {
 
@@ -15,7 +16,7 @@ class Repository {
     }
 
     static GetAvailableBehaviors() {
-        return ['THROW', 'COMPUTE']
+        return ['THROW', 'COMPUTE', 'MALLOC']
     }
 
     /**
@@ -30,6 +31,8 @@ class Repository {
               return new ThrowException()
             case 'COMPUTE':
               return new Compute(value)
+            case 'MALLOC':
+              return new Malloc(value)
             default:
               return null
           }
