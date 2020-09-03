@@ -4,8 +4,6 @@ const Behavior = require("./behavior")
 const logger = require('../logger')
 
 class Malloc extends Behavior {
-    static Allocated = []
-
     constructor(value) {
         super("MALLOC", value)
     }
@@ -52,8 +50,10 @@ class Malloc extends Behavior {
         {
             data.push(uuidv4())
         }
-        Malloc.Allocated.push(data)
+        Allocated.push(data)
     }
 }
+
+const Allocated = []
 
 module.exports = Malloc
