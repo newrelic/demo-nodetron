@@ -19,10 +19,10 @@
 - name: Adding crontab entries
   shell: "( crontab -l | grep -v -F '{{ item.job }}' || : ; echo '{{ item.frequency }} {{ item.job }}' ) | crontab -"
   loop: "{{ cronjob_json }}"
-  when: cronjob_json is defined and (item.root == false)
+  when: cronjob_json is defined and (item.root is not defined or item.root == false)
 
 - name: Adding root crontab entries
   shell: "( crontab -l | grep -v -F '{{ item.job }}' || : ; echo '{{ item.frequency }} {{ item.job }}' ) | crontab -"
   become: yes
   loop: "{{ cronjob_json }}"
-  when: cronjob_json is defined and (item.root == true)
+  when: cronjob_json is defined and item.root is defined and item.root == true
