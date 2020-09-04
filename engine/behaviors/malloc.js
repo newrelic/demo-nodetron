@@ -1,7 +1,15 @@
 'use strict'
 const { v4: uuidv4 } = require('uuid')
+const NodeCache = require( "node-cache" )
 const Behavior = require("./behavior")
 const logger = require('../logger')
+
+const Allocated = new NodeCache(
+    { 
+        stdTTL: 0,
+        checkperiod: 0,
+        maxKeys: -1
+    })
 
 class Malloc extends Behavior {
     constructor(value) {
@@ -44,16 +52,16 @@ class Malloc extends Behavior {
     allocateKB(numberKb)
     {
         // 1KB is 64 guids (16 bytes)
-        var size = numberKb*64
+        var key = uuidv4()
+        var size = (numberKb*64)-1
         var data = []
         for (var index=0; index<size; index++)
         {
-            data.push(uuidv4())
+            var value = uuidv4()
+            data.push(value)
         }
-        Allocated.push(data)
+        Allocated.set(key, data)
     }
 }
-
-const Allocated = []
 
 module.exports = Malloc
