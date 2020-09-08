@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Mon Aug 24 2020 13:51:17 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Tue Sep 08 2020 16:26:37 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nodetron",
   "projectUrl": "https://github.com/newrelic/demo-nodeapp/tree/main/engine",
   "includeDev": true,
@@ -82,6 +82,19 @@
       "publisher": "Mariusz Nowak",
       "email": "medyk@medikoo.com",
       "url": "http://www.medikoo.com/"
+    },
+    "node-cache@5.1.2": {
+      "name": "node-cache",
+      "version": "5.1.2",
+      "range": "^5.1.2",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/node-cache/node-cache",
+      "versionedRepoUrl": "https://github.com/node-cache/node-cache/tree/v5.1.2",
+      "licenseFile": "node_modules/node-cache/LICENSE",
+      "licenseUrl": "https://github.com/node-cache/node-cache/blob/v5.1.2/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "mpneuried",
+      "email": "mp@tcs.de"
     },
     "node-fetch@2.6.0": {
       "name": "node-fetch",
