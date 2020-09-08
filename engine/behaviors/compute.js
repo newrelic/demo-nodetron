@@ -32,44 +32,21 @@ class Compute extends Behavior {
             return
         }
         
-        const rangeStart = parsedValue[0]
-        const rangeEnd = parsedValue[1]
-        const difference = rangeEnd - rangeStart
+        const start = parsedValue[0]
+        const end = parsedValue[1]
+        const duration = this.sample(start, end)
 
-        // Randomly select a duration length within the range
-        const boxMuller = this.boxMullerTransform()
-        const duration = rangeStart + (boxMuller * difference)
-        
         const startTime = new Date().getTime()
-        
-        while((new Date().getTime() - startTime) < duration) {
+        var now = new Date().getTime()
+        while((now - startTime) < duration) {
             for (let i = 0; i < 50; i++) {
                 for (let j = 0; j < i * 50; j++) {
-                    // eslint-disable-next-line
-                    const n = new Date().getTime() / Math.pow(Math.PI, Math.ceil(Math.random() * 10))
+                    now / Math.pow(Math.PI, Math.ceil(Math.random() * 10))
                 }
             }
+            now = new Date().getTime()
         }
-        
         return true
-    }
-    
-    /**
-     * Returns a random value between 0 and 1 (not including 0), that value should follow a normal distribution
-     */
-    boxMullerTransform() {
-        // Ensure there isn't a zero value
-        const r1 = 1 - Math.random()
-        const r2 = 1 - Math.random()
-
-        // This is a Box Muller transform. Given 2 indepenent samples from a uniform distribution (Javascript's Math.random is uniform)
-        // this formula will generate a random variable that will follow a normal distribution.
-        // Source: https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
-        const boxMuller = Math.sqrt(-2.0 * Math.log(r1)) * Math.cos(2.0 * Math.PI + r2)
-        // Convert to a value between 0 and 1
-        const decimalBM = boxMuller / 10.0 + 0.5
-
-        return decimalBM
     }
 
 }

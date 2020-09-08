@@ -17,6 +17,12 @@ Nodetron supports the below behaviors. For more information, see the [Behavior D
 
 * Throw
 * Compute
+* Memory Allocation
+
+### Requirement
+
+When hosting on a physical host or VM (not serverless/lambda), nodetron requires at least 800MB of memory.
+When deployed with the deployer, a `memmon` watchdog process ensures the process is recycled if the memory consumption exceed this threshold.
 
 ### Configuration
 
@@ -91,6 +97,38 @@ docker build -t nodetron .
 docker run -it --entrypoint npm nodetron test
 docker run -it -p 3001:3001 nodetron
 ```
+
+### Cron jobs support
+
+Cron jobs can be registered upon deployment using the demo-deployer Files configuration for the service. Here is an example for restarting a `node1` service every hour, at the 0 minute.
+
+```json
+{
+  "services": [
+    {
+      "id": "node1",
+      "display_name": "Node1",
+      "source_repository": "https://github.com/newrelic/demo-nodetron.git",
+      "deploy_script_path": "deploy/linux/roles",
+      "port": 5001,
+      "destinations": ["host"],
+      "files": [
+        {
+          "destination_filepath": "engine/cronjob.json",
+          "content": [
+              {
+                  "frequency": "0 * * * *",
+                  "job": "/usr/bin/supervisorctl restart node1",
+                  "root": true
+              }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
 
 ## Contributing
 
