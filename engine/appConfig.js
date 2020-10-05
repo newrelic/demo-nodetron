@@ -31,6 +31,11 @@ class AppConfig{
       return config.port
     }
 
+    getDelayStartMs(){
+      const config = this.read()
+      return config.delayStartMs
+    }
+
     getDependencyEndpoint(endpoint){
       var dependencyEndpoints = []
       const config = this.read()

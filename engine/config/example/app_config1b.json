@@ -1,6 +1,7 @@
 {
   "id": "tron2",
   "port": 5002,
+  "delayStartMs": 10000,
   "dependencies": [
     ]
 }

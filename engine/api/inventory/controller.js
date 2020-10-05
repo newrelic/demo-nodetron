@@ -1,5 +1,6 @@
 'use strict';
 var logger = require("../../logger")
+const baseController = require("../baseController")
 const inventoryStore = require("../../inventoryStore")
 const tronResponse = require("../../tronResponse")
 var behaviorsController = require('../../api/behaviors/controller')
@@ -7,6 +8,7 @@ var behaviorsController = require('../../api/behaviors/controller')
 let instance = new inventoryStore("data/inventory.json")
 
 exports.getInventories = function(httpRequest, httpResponse, next) {
+    baseController.ensureAppIsStarted()
     logger.info('/inventory', 'get')
     behaviorsController.handlePreFunc(httpRequest, httpResponse, function(){})
     var data = instance.findAll()
@@ -24,6 +26,7 @@ exports.getInventories = function(httpRequest, httpResponse, next) {
 };
 
 exports.getInventory = function(httpRequest, httpResponse, next) {
+    baseController.ensureAppIsStarted()
     var id = httpRequest.params.id
     logger.info('/inventory', `/${id}`, 'get')
     behaviorsController.handlePreFunc(httpRequest, httpResponse, function(){})

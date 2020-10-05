@@ -1,9 +1,11 @@
 'use strict';
 var logger = require("../../logger")
+const baseController = require("../baseController")
 const tronResponse = require("../../tronResponse")
 var behaviorsController = require('../../api/behaviors/controller')
 
 exports.validateMessage = function(httpRequest, httpResponse, next) {
+    baseController.ensureAppIsStarted()
     var message = httpRequest.query.message
     logger.info('/validateMessage', 'get', message)
     behaviorsController.handlePreFunc(httpRequest, httpResponse, function(){})
