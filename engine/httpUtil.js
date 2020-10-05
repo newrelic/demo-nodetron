@@ -16,7 +16,7 @@ async function innerFetchJson(url, json, headers = []){
       body: json
   }
   logger.info(`fetch(${url})`, myHeaders)
-  return fetch(url, options)  
+  return fetch(url, options)
 }
 
 exports.fetchJson = innerFetchJson
