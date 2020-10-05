@@ -19,7 +19,7 @@ async function innerFetchJson(url, json, headers = []){
   return fetch(url, options)
     .then(response => {
         if (!response.ok) { throw new Error(`response code ${response.status}`) }
-        else { return new Promise(response) }
+        else { return response }
     })
     .catch(error => {
       return Promise.reject(error.message)
