@@ -17,6 +17,13 @@ async function innerFetchJson(url, json, headers = []){
   }
   logger.info(`fetch(${url})`, myHeaders)
   return fetch(url, options)
+    .then(response => {
+        if (!response.ok) { throw new Error(`response code ${response.status}`) }
+        else { return new Promise(response) }
+    })
+    .catch(error => {
+      return Promise.reject(error.message)
+    })
 }
 
 exports.fetchJson = innerFetchJson

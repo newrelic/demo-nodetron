@@ -74,9 +74,9 @@ class TronResponse{
 
       var downstreamResponse = await httpUtil.fetchJson(url, null, headers)
       .catch(error => {
-        var message = `An error occurred during a downstream request to ${url} detail:${error.message}`
-        throw new Error(message)}
-      )
+        var message = `An error occurred during a downstream request to ${url} detail:${error}`
+        throw new Error(message)
+      })
 
       this.appendTrace(downstreamResponse)
 
