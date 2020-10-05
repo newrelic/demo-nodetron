@@ -1,5 +1,4 @@
 'use strict';
-var logger = require("../logger")
 const appConfig = require('../appConfig')
 
 exports.ensureAppIsStarted = function() {
