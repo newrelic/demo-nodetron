@@ -39,6 +39,7 @@ else{
   app.use(function (err, req, res, next) {
     logger.error(err.message)
     res.status(500).send(err.message)
+    next(err)
   })
 
   const port = config.getPort()
