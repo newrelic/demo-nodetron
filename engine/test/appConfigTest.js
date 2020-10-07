@@ -6,21 +6,26 @@ describe(`AppConfig Test`, function () {
         var appConfig = AppConfigTest.givenAppConfig("identity1")
         assert.equal(appConfig.getAppId(), "identity1")
     })
-    
+
     it(`should have a port`, function() {
         var appConfig = AppConfigTest.givenAppConfig("identity1", 3004)
         assert.equal(appConfig.getPort(), 3004)
     })
 
+    it(`should have delayStartMs`, function() {
+        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, 150)
+        assert.equal(appConfig.getDelayStartMs(), 150)
+    })
+
     it(`should have a single dependency`, function() {
-        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, [{"id":"app2", urls:["https://somewhere.newrelic.com/api"]}])
+        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, 0, [{"id":"app2", urls:["https://somewhere.newrelic.com/api"]}])
         var dependencyEndpoints = appConfig.getDependencyEndpoint("/endpoint1")
         assert.equal(dependencyEndpoints.length, 1)
         assert.equal(dependencyEndpoints[0], "https://somewhere.newrelic.com/api/endpoint1")
     })
     
     it(`should fetch all single dependency urls`, function() {
-        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, [{"id":"app2", urls:["https://somewhere.newrelic.com/api", "https://else.newrelic.com/api"]}])
+        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, 0, [{"id":"app2", urls:["https://somewhere.newrelic.com/api", "https://else.newrelic.com/api"]}])
         var dependencyEndpoints = appConfig.getDependencyEndpoint("/endpoint1")
         assert.equal(dependencyEndpoints.length, 2)
         assert.equal(dependencyEndpoints[0], "https://somewhere.newrelic.com/api/endpoint1")
@@ -28,7 +33,7 @@ describe(`AppConfig Test`, function () {
     })
 
     it(`should have all dependencies`, function() {
-        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, [{"id":"app2", urls:["https://somewhere.newrelic.com/api"]},{"id":"app3", urls:["https://else.newrelic.com/api"]}])
+        var appConfig = AppConfigTest.givenAppConfig("identity1", 3004, 0, [{"id":"app2", urls:["https://somewhere.newrelic.com/api"]},{"id":"app3", urls:["https://else.newrelic.com/api"]}])
         var dependencyEndpoints = appConfig.getDependencyEndpoint("/endpoint1")
         assert.equal(dependencyEndpoints.length, 2)
         assert.equal(dependencyEndpoints[0], "https://somewhere.newrelic.com/api/endpoint1")
@@ -37,10 +42,11 @@ describe(`AppConfig Test`, function () {
 })
 
 class AppConfigTest{
-    static givenAppConfig(id, port = 3000, dependencies = null){
+    static givenAppConfig(id, port = 3000, delayStartMs = 0, dependencies = null){
         var raw = {
             "id": id,
-            "port": port
+            "port": port,
+            "delayStartMs": delayStartMs
         }
         if (dependencies != null && dependencies.length>0){
             raw["dependencies"] = dependencies

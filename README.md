@@ -61,7 +61,10 @@ Here is a deployer config example:
       "display_name": "Nodetron",
       "source_repository": "https://github.com/newrelic/demo-nodetron.git",
       "deploy_script_path": "/deploy/linux/roles",
-      "port": 3002
+      "port": 3002,
+      "params": {
+        "delay_start_ms": 5000
+      }
     }
   ],
   "resources": [
@@ -87,6 +90,8 @@ Here is a deployer config example:
 }
 ```
 
+#### Params
+* delay_start_ms can be used to delay the time the service starts by this amount in milliseconds. During that interval, any incoming http request will error.
 
 ### Docker support
 

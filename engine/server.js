@@ -36,6 +36,12 @@ else{
   var behaviorsRoute = require('./api/behaviors/route')
   behaviorsRoute(app)
 
+  app.use(function (err, req, res, next) {
+    logger.error(err.message)
+    res.status(500).send(err.message)
+    next(err)
+  })
+
   const port = config.getPort()
   const appId = config.getAppId()
   app.listen(port)
