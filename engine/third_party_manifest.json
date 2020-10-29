@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Wed Oct 07 2020 17:07:03 GMT+0000 (Coordinated Universal Time)",
+  "lastUpdated": "Thu Oct 29 2020 19:22:10 GMT+0000 (Coordinated Universal Time)",
   "projectName": "nodetron",
   "projectUrl": "https://github.com/newrelic/demo-nodeapp/tree/main/engine",
   "includeDev": true,
@@ -29,15 +29,15 @@
       "email": "hello@jkimbo.com",
       "url": "jkimbo.com"
     },
-    "eslint@7.7.0": {
+    "eslint@7.12.1": {
       "name": "eslint",
-      "version": "7.7.0",
-      "range": "^7.7.0",
+      "version": "7.12.1",
+      "range": "^7.10.0",
       "licenses": "MIT",
       "repoUrl": "https://github.com/eslint/eslint",
-      "versionedRepoUrl": "https://github.com/eslint/eslint/tree/v7.7.0",
+      "versionedRepoUrl": "https://github.com/eslint/eslint/tree/v7.12.1",
       "licenseFile": "node_modules/eslint/LICENSE",
-      "licenseUrl": "https://github.com/eslint/eslint/blob/v7.7.0/LICENSE",
+      "licenseUrl": "https://github.com/eslint/eslint/blob/v7.12.1/LICENSE",
       "licenseTextSource": "file",
       "publisher": "Nicholas C. Zakas",
       "email": "nicholas+npm@nczconsulting.com"
@@ -96,15 +96,15 @@
       "publisher": "mpneuried",
       "email": "mp@tcs.de"
     },
-    "node-fetch@2.6.0": {
+    "node-fetch@2.6.1": {
       "name": "node-fetch",
-      "version": "2.6.0",
-      "range": "^2.6.0",
+      "version": "2.6.1",
+      "range": "^2.6.1",
       "licenses": "MIT",
       "repoUrl": "https://github.com/bitinn/node-fetch",
-      "versionedRepoUrl": "https://github.com/bitinn/node-fetch/tree/v2.6.0",
+      "versionedRepoUrl": "https://github.com/bitinn/node-fetch/tree/v2.6.1",
       "licenseFile": "node_modules/node-fetch/LICENSE.md",
-      "licenseUrl": "https://github.com/bitinn/node-fetch/blob/v2.6.0/LICENSE.md",
+      "licenseUrl": "https://github.com/bitinn/node-fetch/blob/v2.6.1/LICENSE.md",
       "licenseTextSource": "file",
       "publisher": "David Frank"
     },
@@ -122,15 +122,15 @@
       "email": "sindresorhus@gmail.com",
       "url": "sindresorhus.com"
     },
-    "uuid@8.3.0": {
+    "uuid@8.3.1": {
       "name": "uuid",
-      "version": "8.3.0",
-      "range": "^8.3.0",
+      "version": "8.3.1",
+      "range": "^8.3.1",
       "licenses": "MIT",
       "repoUrl": "https://github.com/uuidjs/uuid",
-      "versionedRepoUrl": "https://github.com/uuidjs/uuid/tree/v8.3.0",
+      "versionedRepoUrl": "https://github.com/uuidjs/uuid/tree/v8.3.1",
       "licenseFile": "node_modules/uuid/LICENSE.md",
-      "licenseUrl": "https://github.com/uuidjs/uuid/blob/v8.3.0/LICENSE.md",
+      "licenseUrl": "https://github.com/uuidjs/uuid/blob/v8.3.1/LICENSE.md",
       "licenseTextSource": "file"
     },
     "winston@3.3.3": {

@@ -96,7 +96,7 @@ SOFTWARE.
 
 ### eslint
 
-This product includes source derived from [eslint](https://github.com/eslint/eslint) ([v7.7.0](https://github.com/eslint/eslint/tree/v7.7.0)), distributed under the [MIT License](https://github.com/eslint/eslint/blob/v7.7.0/LICENSE):
+This product includes source derived from [eslint](https://github.com/eslint/eslint) ([v7.12.1](https://github.com/eslint/eslint/tree/v7.12.1)), distributed under the [MIT License](https://github.com/eslint/eslint/blob/v7.12.1/LICENSE):
 
 ```
 Copyright JS Foundation and other contributors, https://js.foundation
@@ -230,7 +230,7 @@ SOFTWARE.
 
 ### node-fetch
 
-This product includes source derived from [node-fetch](https://github.com/bitinn/node-fetch) ([v2.6.0](https://github.com/bitinn/node-fetch/tree/v2.6.0)), distributed under the [MIT License](https://github.com/bitinn/node-fetch/blob/v2.6.0/LICENSE.md):
+This product includes source derived from [node-fetch](https://github.com/bitinn/node-fetch) ([v2.6.1](https://github.com/bitinn/node-fetch/tree/v2.6.1)), distributed under the [MIT License](https://github.com/bitinn/node-fetch/blob/v2.6.1/LICENSE.md):
 
 ```
 The MIT License (MIT)
@@ -290,7 +290,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### uuid
 
-This product includes source derived from [uuid](https://github.com/uuidjs/uuid) ([v8.3.0](https://github.com/uuidjs/uuid/tree/v8.3.0)), distributed under the [MIT License](https://github.com/uuidjs/uuid/blob/v8.3.0/LICENSE.md):
+This product includes source derived from [uuid](https://github.com/uuidjs/uuid) ([v8.3.1](https://github.com/uuidjs/uuid/tree/v8.3.1)), distributed under the [MIT License](https://github.com/uuidjs/uuid/blob/v8.3.1/LICENSE.md):
 
 ```
 The MIT License (MIT)
