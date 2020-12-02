@@ -96,7 +96,7 @@ SOFTWARE.
 
 ### eslint
 
-This product includes source derived from [eslint](https://github.com/eslint/eslint) ([v7.12.1](https://github.com/eslint/eslint/tree/v7.12.1)), distributed under the [MIT License](https://github.com/eslint/eslint/blob/v7.12.1/LICENSE):
+This product includes source derived from [eslint](https://github.com/eslint/eslint) ([v7.13.0](https://github.com/eslint/eslint/tree/v7.13.0)), distributed under the [MIT License](https://github.com/eslint/eslint/blob/v7.13.0/LICENSE):
 
 ```
 Copyright JS Foundation and other contributors, https://js.foundation
