@@ -3,5 +3,6 @@
   "port": 5001,
   "delayStartMs": 10000,
   "dependencies": [
-    ]
+    ],
+  "database": {}
 }

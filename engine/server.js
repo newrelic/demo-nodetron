@@ -5,7 +5,8 @@ var logger = require("./logger")
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  appConfig = require('./appConfig')
+  appConfig = require('./appConfig'),
+  DatabaseManager = require('./databaseManager')
 
 logger.init()
 
@@ -35,6 +36,17 @@ else{
 
   var behaviorsRoute = require('./api/behaviors/route')
   behaviorsRoute(app)
+
+  const databaseConfiguration = config.getDatabaseConfiguration()
+  if (databaseConfiguration) {
+    const databaseManager = new DatabaseManager(databaseConfiguration.host, databaseConfiguration.port, databaseConfiguration.user, databaseConfiguration.password)
+    databaseManager.initialize()
+      .then(() => {
+        const queryRoute = require('./api/query/route')
+        queryRoute(app, databaseManager)
+      })
+      .catch(error => logger.error('Unable to initialize the database', error))
+  } 
 
   app.use(function (err, req, res, next) {
     logger.error(err.message)

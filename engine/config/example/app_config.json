@@ -3,5 +3,11 @@
   "port": 3001,
   "delayStartMs": 10000,
   "dependencies": [
-    ]
+    ],
+  "database": {
+    "user": "demotron",
+    "password": "securepass1",
+    "host": "18.233.96.81",
+    "port": "6002"
+  }
 }
