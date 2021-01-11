@@ -51,6 +51,19 @@ class AppConfig{
       return dependencyEndpoints
     }
 
+    getDatabaseConfiguration(){
+      const config = this.read()
+      const database = config.database
+
+      if (database.user     &&
+          database.password && 
+          database.host     && 
+          database.port
+      ){
+        return database
+      }
+    }
+      
     read(){
       if (this.config == null){
         logger.info(`Loading config with ${this.filename}`)

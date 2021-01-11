@@ -63,7 +63,11 @@ Here is a deployer config example:
       "deploy_script_path": "/deploy/linux/roles",
       "port": 3002,
       "params": {
-        "delay_start_ms": 5000
+        "delay_start_ms": 5000,
+        "database_user": "testuser",
+        "database_password": "<password here>",
+        "database_host": "127.0.0.1",
+        "database_port": 5000
       }
     }
   ],
@@ -92,6 +96,10 @@ Here is a deployer config example:
 
 #### Params
 * delay_start_ms can be used to delay the time the service starts by this amount in milliseconds. During that interval, any incoming http request will error.
+* database_user is used when connecting to a database. It defines the user to connect as.
+* database_password is used when connecting to a database. It defines the password to use when connecting as the user denoted in the `database_user` field.
+* database_host is used when connecting to a database. Its value should be the IP address of the database.
+* database_port is used when connecting to a database. Its value should be the port that the database is listening on.
 
 ### Docker support
 
