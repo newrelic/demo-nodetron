@@ -6,15 +6,17 @@ const inventoryStore = require('./inventoryStore')
 let instance = new inventoryStore("data/inventory.json")
 
 class DatabaseManager {
-  constructor(host, port, user, password) {
-    this._databaseName = 'nodetron'
+  constructor(databaseName, databaseConfiguration) {
+    this._databaseName = databaseName
     this._connection = undefined
+
+    const { host, port, user, password } = databaseConfiguration
     this._configuration = {
       host,
       port,
       user,
       password,
-      database: this._databaseName,
+      database: databaseName,
       charset: 'utf8'
     }
   }
@@ -37,7 +39,6 @@ class DatabaseManager {
       table.string('sku')
       table.string('description')
     })
-
 
     const inventoryData = instance.findAll()
     for (const item of inventoryData) {
@@ -64,7 +65,11 @@ class DatabaseManager {
     rawConnection.destroy()
   }
 
-  query() {
+  async query() {
+    if (!this._connection) {
+      await this.initialize()
+    }
+
     return this._connection.select().from('inventory')
   }
 }

@@ -39,14 +39,10 @@ else{
 
   const databaseConfiguration = config.getDatabaseConfiguration()
   if (databaseConfiguration) {
-    logger.info('Database configuration found, initializing connection...')
-    const databaseManager = new DatabaseManager(databaseConfiguration.host, databaseConfiguration.port, databaseConfiguration.user, databaseConfiguration.password)
-    databaseManager.initialize()
-      .then(() => {
-        const queryRoute = require('./api/query/route')
-        queryRoute(app, databaseManager)
-      })
-      .catch(error => logger.error('Unable to initialize the database', error))
+    logger.info('Database configuration found, adding /api/query route')
+    const databaseManager = new DatabaseManager(config.getAppId(), databaseConfiguration)
+    const queryRoute = require('./api/query/route')
+    queryRoute(app, databaseManager)
   }
   else {
     logger.info('Database configuration not found.')
