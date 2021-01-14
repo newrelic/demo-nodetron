@@ -5,7 +5,8 @@ var logger = require("./logger")
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  appConfig = require('./appConfig')
+  appConfig = require('./appConfig'),
+  DatabaseManager = require('./databaseManager')
 
 logger.init()
 
@@ -35,6 +36,17 @@ else{
 
   var behaviorsRoute = require('./api/behaviors/route')
   behaviorsRoute(app)
+
+  const databaseConfiguration = config.getDatabaseConfiguration()
+  if (databaseConfiguration) {
+    logger.info('Database configuration found, adding /api/query route')
+    const databaseManager = new DatabaseManager(config.getAppId(), databaseConfiguration)
+    const queryRoute = require('./api/query/route')
+    queryRoute(app, databaseManager)
+  }
+  else {
+    logger.info('Database configuration not found.')
+  }
 
   app.use(function (err, req, res, next) {
     logger.error(err.message)

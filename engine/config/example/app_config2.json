@@ -12,5 +12,6 @@
       "id":"tron2",
       "urls":["http://localhost:5002"]
     }
-  ]
+  ],
+  "database": {} 
 }
