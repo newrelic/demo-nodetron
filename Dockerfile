@@ -3,14 +3,15 @@ FROM node:latest
 RUN apt-get clean all
 RUN apt-get update
 RUN apt update
-RUN apt -y install wget curl
 
-RUN mkdir /mnt/nodetron
-ADD ./engine /mnt/nodetron
-WORKDIR /mnt/nodetron
+RUN mkdir /mnt/abtester
+ADD ./engine /mnt/abtester
+WORKDIR /mnt/abtester
 
 RUN npm install
 
-EXPOSE 3001
+ARG PORT=3001
+ENV PORT=${PORT}
+EXPOSE $PORT
 
-CMD [ "node", "./server.js", "config/example/app_config.json"]
+ENTRYPOINT [ "node", "./server.js", "config/example/app_config.json"]

@@ -1,206 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap');
-
-body {
-  font-family: 'Open sans';
+#layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-header {
-  padding-top: 40px;
+#signup {
+  border: solid;
+  border-width: 0.1rem;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  width: 30rem;
+  background-color: rgb(221, 225, 230, 0.2); /* very very light grey */
 }
 
-main {
-  max-width: 750px;
-  margin: 0 auto;
+.subscribe-inputs {
+  border-radius: 0px;
+  border-width: 0.1rem;
+  padding: 0.4rem;
+  margin-top: 1rem;
 }
 
-p {
-  font-size: 16px;
-  line-height: 26px;
-  color: #3E4C4C;
+.subscribe-form {
+  width: 80%;
+  flex-direction: row;
+  justify-content: center;
+  display: flex;
+  padding: 0.5rem;
 }
 
-p a {
-  color: #008C99;
-  border-bottom: 1px dotted #008c998a;
-  text-decoration: none;
+input.subscribe-inputs {
+  flex-grow: 1;
 }
 
-li {
-  line-height: 10px;
-  color: #3E4C4C;
+
+button.subscribe-inputs {
+  background-color: rgb(166, 222, 175); /* light mint green */
+  width: 5rem;
+  margin-left: 0.5rem;
 }
 
-li a {
-  color: #008C99;
-  border-bottom: 1px dotted #008c998a;
-  text-decoration: none;
-}
-
-pre {
-  overflow-x: scroll;
-  font-family: menlo, monospaced;
-  margin: 12px 0;
-  padding: 8px 12px;
-  border-radius: 4px;
-  background-color: rgba(0,0,0, .075);
-  line-height: 19px;
-  font-size: 12px;
-  color: var(--nr1--base-colors--ui--gray--9);
-}
-
-.logo {
-  display: block;
-  width: 393px;
-  height: 133px;
-  background-image: url(images/logo.jpg);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  margin: 0 auto;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.cta-container {
-  display: grid;
-  place-items: center;
-  margin-bottom: 30px;
-  padding: 16px;
-  background-color: #F7F8F8;
-  border-radius: 4px;
-}
-
-.container { 
-  width:100%;
-  text-align:left;
-}
-
-.child {
-  width:"50%";
-  display:inline-block;
-  text-align:left;
-}
-
-.button {
-  padding: 12px 16px;
-  color: #fff;
-  background: #006C75;
-  border-radius: 3px;
-  border: none;
-  font-family: 'open sans';
-  font-weight: 600;
-  transition: all .08s ease-out;
-}
-
-.button:hover {
-  cursor: pointer;
-  background-color: #008C99;
-  transform: translateY(-1px);
-}
-
-.button:focus {
-  outline: none;
-  border: none;
-  box-shadow: 0 0 0 4px #008c9935;
-}
-
-.button:active {
-  transform: translateY(1px);
-}
-
-table {
-  width: 100%;
-  box-shadow: 0 0 0 2px #006C75;
-  border-radius: 4px;
-  overflow:hidden;
-  border-collapse: collapse;
-}
-
-td {
-  padding: 10px 0 10px 16px;
-  font-size: 14px;
-  color: #3E4C4C;
-  line-height: 20px;
-  border-bottom: 1px dotted #CBCFCF;
-}
-
-tr:hover {
-  background-color: #F7F8F8;
-}
-
-th {
-  padding: 10px 10px 10px 16px;
-  color: #fff;
-  text-transform: uppercase;
-  text-align: left;
-  letter-spacing: 1px;
-  font-size: 14px;
-}
-
-thead {
-  background-color: #006C75;
-  border-radius: 4px 4px 0 0;
-}
-
-thead tr:hover {
-  background-color: transparent;
-}
-
-tr:last-child td {
-  border: none;
-}
-
-.primary-table .description-col {
-  display: none;
-}
-
-.details-table {
-  margin-bottom: 30px;
-  box-shadow: 0 0 0 2px #E0E2E2;
-}
-
-.details-table th {
-  padding: 5px 16px;
-  color: #223030;
-}
-
-.details-table thead {
-  background-color: #E0E2E2;
-}
-
-.details-table-heading {
-  margin-top: 50px;
-  margin-bottom: 16px;
-  font-size: 18px;
-  line-height: 20px;
-  text-align: center;
-  color: #020303;
-}
-
-button {
-  background-color: #E0E2E2;
-  border: none;
-  border-radius: 3px;
-  padding: 4px 10px;
-  white-space: nowrap;
-  font-size: 12px;
-  color: #223030;
-  font-family: 'open sans';
-  transition: all .08s ease-out;
-}
-
-button:hover {
-  cursor:pointer;
-  background-color: #CBCFCF;
-  transform: translateY(-1px);
-}
-
-button:focus {
-  outline: none;
-  border: none;
-  box-shadow: 0 0 0 3px rgba(0,0,0, .04);
-}
-
-button:active {
-  transform: translateY(1px);
-}

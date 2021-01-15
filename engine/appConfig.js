@@ -21,49 +21,13 @@ class AppConfig{
       return instance
     }
 
-    getAppId(){
-        const config = this.read()
-        return config.id
-    }
-
     getPort(){
       const config = this.read()
       return config.port
     }
 
-    getDelayStartMs(){
-      const config = this.read()
-      return config.delayStartMs
-    }
+    // Other values like A/B weighting should be controlled here
 
-    getDependencyEndpoint(endpoint){
-      var dependencyEndpoints = []
-      const config = this.read()
-      config.dependencies.forEach(dependency => {
-        const id = dependency.id
-        const urls = dependency.urls
-        logger.info(`Found dependency with id:${id} and urls:${urls}`)
-        urls.forEach(url => {
-          var dependencyEndpoint = url+endpoint
-          dependencyEndpoints.push(dependencyEndpoint)
-        })
-      })
-      return dependencyEndpoints
-    }
-
-    getDatabaseConfiguration(){
-      const config = this.read()
-      const database = config.database
-
-      if (database.user     &&
-          database.password && 
-          database.host     && 
-          database.port
-      ){
-        return database
-      }
-    }
-      
     read(){
       if (this.config == null){
         logger.info(`Loading config with ${this.filename}`)
