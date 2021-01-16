@@ -1,6 +1,6 @@
 'use strict'
-var logger = require("./logger")
-const fileUtil = require("./fileUtil")
+var logger = require("./common/logger")
+const fileUtil = require("./common/fileUtil")
 
 var instance = null
 

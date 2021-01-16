@@ -10,8 +10,9 @@
     <div id="layout">
       <div id="signup">
         <span>Sign up for our newsletter and get a free shirt!</span>
-        <form class="subscribe-form">
+        <form action="/subscribe" method="post" class="subscribe-form">
           <input class="subscribe-inputs" type="email" placeholder="email" />
+          <input type="hidden" name="page_version" value="b" />
           <button class="subscribe-inputs" type="submit">Subscribe</button>
         </form>
       </div>

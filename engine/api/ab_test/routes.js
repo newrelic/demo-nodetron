@@ -1,7 +1,8 @@
 'use strict'
 
 const express = require('express')
-const logger = require('../../logger')
+const logger = require('../../common/logger')
+const SubscriptionManager = require('../../subscriptionManager')
 
 /**
  * A/B testing middleware and routes, serves routeA, then routeB
@@ -12,7 +13,9 @@ const logger = require('../../logger')
 **/ 
 module.exports = (routeA, routeB) => {
   const router = express.Router()
+  const subscriptionManager = new SubscriptionManager()
   let isRouteANext = true
+
   router.use((req, res, next) => {
     if (req.url !== '/') return next()
     
@@ -25,6 +28,34 @@ module.exports = (routeA, routeB) => {
     isRouteANext = !isRouteANext
 
     next()
+  })
+
+  router.post('/subscribe', (req, res) => {
+    logger.info('/subscribe')
+    logger.info(req.body)
+    let pageVersion = req.body.page_version
+    pageVersion = pageVersion ? pageVersion.toLowerCase() : undefined
+
+    if (pageVersion && (pageVersion === 'a' || pageVersion === 'b')) {
+      logger.info(`new subscription from page ${pageVersion}`) 
+      subscriptionManager.add(pageVersion)
+      return res.sendStatus(201)
+    }
+    else {
+      logger.info('page_version must be "a" or "b"')
+      return res.sendStatus(400)
+    }
+  })
+
+  router.post('/unsubscribe', (req, res) => {
+    logger.info('/unsubscribe')
+    subscriptionManager.unsubscribe()
+    res.sendStatus(204)
+  })
+
+  router.get('/unsubscriptions', (req, res) => {
+    logger.info('/unsubscriptions')
+    res.status(200).json(subscriptionManager.getUnsubscriptions())
   })
 
   return router
