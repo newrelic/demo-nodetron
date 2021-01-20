@@ -4,14 +4,15 @@ RUN apt-get clean all
 RUN apt-get update
 RUN apt update
 
-RUN mkdir /mnt/abtester
-ADD ./engine /mnt/abtester
-WORKDIR /mnt/abtester
+RUN mkdir /mnt/ab-tester
+WORKDIR /mnt/ab-tester
 
-RUN npm install
+COPY ./engine/package.json ./engine/package-lock.json /mnt/ab-tester/
 
-ARG PORT=3001
-ENV PORT=${PORT}
-EXPOSE $PORT
+RUN npm ci
 
-ENTRYPOINT [ "node", "./server.js", "config/example/app_config.json"]
+COPY ./engine /mnt/ab-tester
+
+EXPOSE 3001
+
+ENTRYPOINT [ "node", "./server.js", "config/app_config.json"]

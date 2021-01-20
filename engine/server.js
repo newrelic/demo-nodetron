@@ -19,7 +19,7 @@ else {
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
 
-  app.use(aBTestRoutes('/a/index.html', '/b/index.html'))
+  app.use(aBTestRoutes(config, '/a/index.html', '/b/index.html'))
   app.use('/', express.static('public'))
 
   app.use(function (err, req, res, next) {
@@ -28,7 +28,7 @@ else {
     next(err)
   })
 
-  const port = process.env.PORT || 3001
+  const port = config.getPort() || 3001
   app.listen(port)
 
   logger.info(`server started on:${port}`)

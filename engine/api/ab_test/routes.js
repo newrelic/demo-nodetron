@@ -11,32 +11,41 @@ const SubscriptionManager = require('../../subscriptionManager')
  * @param {String} routeB the relative path to another index.html file
  * @returns {Router}
 **/ 
-module.exports = (routeA, routeB) => {
+module.exports = (appConfig, routeA, routeB) => {
   const router = express.Router()
-  const subscriptionManager = new SubscriptionManager()
-  let isRouteANext = true
+  const subscriptionManager = new SubscriptionManager(appConfig)
+  const authValue = appConfig.getAuthString()
+  let isTestRunning = true
+  let currentRoute = routeA
+
+  if (typeof authValue !== 'string') {
+    throw new Error('authString must be a string')
+  }
+
+  router.use((req, res, next) => {
+    logger.info(`${req.method} ${req.url}`)
+    next()
+  })
 
   router.use((req, res, next) => {
     if (req.url !== '/') return next()
-    
-    const currentRoute = isRouteANext ? routeA : routeB
-    logger.info(req.url)
+   
+    if (isTestRunning) {
+      currentRoute = currentRoute === routeA ? routeB : routeA
+    }
+    else {
+      logger.info('Test ended, serving a')
+    }
+
     logger.info(`serving ${currentRoute}`)
-
-    res.append('X-PAGE-VERSION', isRouteANext ? 'A' : 'B')
     req.url = currentRoute
-    isRouteANext = !isRouteANext
-
     next()
   })
 
   router.post('/subscribe', (req, res) => {
-    logger.info('/subscribe')
-    logger.info(req.body)
-    let pageVersion = req.body.page_version
-    pageVersion = pageVersion ? pageVersion.toLowerCase() : undefined
+    const pageVersion = req.body.page_version
 
-    if (pageVersion && (pageVersion === 'a' || pageVersion === 'b')) {
+    if (checkPageVersion(pageVersion)) {
       logger.info(`new subscription from page ${pageVersion}`) 
       subscriptionManager.add(pageVersion)
       return res.sendStatus(201)
@@ -48,15 +57,49 @@ module.exports = (routeA, routeB) => {
   })
 
   router.post('/unsubscribe', (req, res) => {
-    logger.info('/unsubscribe')
     subscriptionManager.unsubscribe()
     res.sendStatus(204)
   })
 
+  router.use('/unsubscriptions', authMiddleware(authValue))
   router.get('/unsubscriptions', (req, res) => {
-    logger.info('/unsubscriptions')
     res.status(200).json(subscriptionManager.getUnsubscriptions())
   })
 
+  router.use('/end-test', authMiddleware(authValue))
+  router.post('/end-test', (req, res) => {
+    const pageVersion = req.query.page_version
+
+    if (checkPageVersion(pageVersion) && isTestRunning) {
+      currentRoute = pageVersion.toLowerCase() === 'a' ? routeA : routeB
+      isTestRunning = false       
+      logger.info(`Test ended, serving version "${pageVersion}" on all requests`)
+      return res.sendStatus(200)
+    }
+    res.sendStatus(400)
+  })
+
   return router
+}
+
+function checkPageVersion(value) {
+  if (value && typeof value === 'string') {
+    const lowerValue = value.toLowerCase()
+    if (lowerValue === 'a' || lowerValue === 'b') {
+      return true
+    }
+  }
+
+  return false
+}
+
+function authMiddleware(value) {
+  return (req, res, next) => {
+    const auth = req.get('Authorization')
+    if (auth && auth === value) {
+      return next() 
+    }
+
+    res.sendStatus(401)
+  }
 }

@@ -7,10 +7,19 @@ const logger = require('./common/logger')
  * Manages subscriptions
  **/
 class SubscriptionManager {
-  constructor() {
+  constructor(appConfig) {
+    const unsubRates = appConfig.getUnsubRates()
+    const rolloverThreshold = appConfig.getRolloverThreshold()
+    this._validateConfiguration(unsubRates, rolloverThreshold)
+
     this._subs = []
-    this._weightedRandomFn = this._initWeightedRandomFunction()
+    this._aUnsubRate = unsubRates.a
+    this._bUnsubRate = unsubRates.b
+    this._rolloverThreshold = rolloverThreshold
+    this._weightedRandomFn = this._initWeightedRandomFunction(unsubRates.b)
   }
+
+
 
   /**
    * Returns all subscriptions
@@ -53,27 +62,78 @@ class SubscriptionManager {
     }
   }
 
+  // Private
+  
+
+  /**
+   * Validates AB test configuration
+   * @param {Object} unsubRates ex: { a: 10, b: 90 } 
+   * @param {Number} rolloverThreshold a positive integer
+  **/
+  _validateConfiguration(unsubRates, rolloverThreshold) {
+    if (!unsubRates || !unsubRates.a || !unsubRates.b) {
+      throw new Error('unsubRates not defined')
+    }
+
+    if (typeof unsubRates.a !== 'number' || typeof unsubRates.b !== 'number') {
+      throw new Error('unsubRates for "a" and "b" must be integers')
+    }
+
+    if (unsubRates.a < 0 || unsubRates.b < 0) {
+      throw new Error('unsubRates for "a" and "b" must be positive integers')
+    }
+
+    if ((unsubRates.a + unsubRates.b) !== 100) {
+      throw new Error('unsubRates for "a" and "b" must add up to 100')
+    }
+
+    if (!rolloverThreshold || typeof rolloverThreshold !== 'number' || rolloverThreshold < 0) {
+      throw new Error('rolloverThreshold must be a positive integer')
+    }
+  }
+
   /**
    * Initializes the weighted random function
+   * @param {Number} bUnsubRate The rate at which 'b' should be return vs 'a'
    * @return {Function} A function that returns 'a' or 'b' weighted toward 'b'
    **/
-  _initWeightedRandomFunction() {
+  _initWeightedRandomFunction(bUnsubRate) {
     const table = []
-    const bUnsubRate = 70
     for (let i = 0; i < 100; i++) {
       table[i] = i < bUnsubRate ? 'b' : 'a'
     }
-
     return () => table[Math.floor(Math.random() * table.length)]
   }
 
+  /**
+   * Removes old subscriptions to prevent increasing memory usage
+  **/
   _rollEntries() {
     logger.info('Rolling subscription entries')
-    const extra = this._subs.length - 1000
+    const extra = this._subs.length - this._rolloverThreshold
     const toRemove = extra > 0 ? extra : 0;
 
     this._subs = this._subs.slice(toRemove)
     logger.info(`Removed ${toRemove} subscription entries`)
+    this._printStatus()
+  }
+
+  /**
+   * Prints the current subscriptions status. Including the total number of subscriptions, the ratio of a to b subscriptions, number of unsubscriptions, and the ratio of a to b for unsubscriptions
+  **/
+  _printStatus() {
+    const percentage = (amount, total) => amount > 0 ? Math.floor((amount/total)*100) : 0
+    const aSubs = this._subs.filter(s => s.version === 'a')
+    const bSubs = this._subs.filter(s => s.version === 'b')
+
+    const total = this._subs.length
+    const totalA = aSubs.length
+    const totalB = bSubs.length
+    logger.info(`Total subscriptions:${total} A:${percentage(totalA, total)}% B:${percentage(totalB, total)}%`)
+    const totalAUnsubs = aSubs.filter(s => s.unsubscribe_datetime).length
+    const totalBUnsubs = bSubs.filter(s => s.unsubscribe_datetime).length
+    const totalUnsubs = totalAUnsubs + totalBUnsubs
+    logger.info(`Total unsubscriptions:${totalUnsubs} A:${percentage(totalAUnsubs, totalUnsubs)}% B:${percentage(totalBUnsubs, totalUnsubs)}%`)
   }
 }
 

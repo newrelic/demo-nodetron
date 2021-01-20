@@ -3,6 +3,15 @@
 # A/B Tester
 A/B Tester is a demo application that conducts an A/B test on newsletter sign ups. Currently it just serves two versions of a sign up page, more coming soon!
 
+## Contents
+* [Requirements](#requirements)
+  * [Development](#development)
+  * [Docker](#docker)
+* [Modifying the configuration](#modifying-the-configuration)
+* [API](#api)
+* [Contributing](#contributing)
+* [License](#license)
+
 ### Requirements
 #### Development
 * Node.js ^14.15.4
@@ -29,6 +38,59 @@ Run the container
 ```
 docker run -d -p 3001:3001 ab-tester
 ```
+
+### Modifying the configuration
+The A/B test is driven through a configuration file. The default file is located here `config/app_config.js`.
+```
+{
+  "port": 3001,
+  "unsubRates": {
+    "a": 30,
+    "b": 70
+  },
+  "authString": "Bearer ABC123",
+  "rolloverThreshold": 1000
+}
+```
+
+##### port
+The port that the server should listen on.
+* Default: 3001
+
+#### unsubRates
+An object containing the rate of unsubscriptions for version `a` and `b`. If `a` is 30 and `b` is 70, then 30% of unsubscriptions will come from `a` and the 70% from `b`. They must be positive integers that add up to 100. 
+* Default: 
+```
+{
+  "a": 30,
+  "b": 70
+}
+```
+
+#### authString
+This is used to check for authentication on the `/unsubscriptions` and `/end-test` endpoints. The value must be a string.
+* Default: "Bearer ABC123"
+
+#### rolloverThreshold
+This is used to ensure that the list of subscriptions doesn't grow indefinitely. Subscriptions at the end of the list will be removed when it goes over this threshold. The value must be a positive integer.
+* Default: 1000
+
+### API
+#### POST /subscribe
+Adds an entry to the list of subscriptions.
+Expects form data with a `page_version` field, the value can be `a` or `b`.
+
+#### POST /unsubscribe
+Removes an entry from the list of unsubscriptions.
+
+#### GET /unsubscriptions
+Returns all unsubscriptions as a JSON array.
+Expects a `Authorization` header that matches the `authString` set in the application configuration file.
+
+#### POST /end-test
+Ends the test, causing the application to only serve the specified version of the page.
+Expects a `Authorization` header that matches the `authString` set in the application configuration file.
+Expects a `page_version` query parameter with a value of `a` or `b`.
 
 ## Contributing
 
