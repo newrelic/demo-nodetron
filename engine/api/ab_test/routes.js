@@ -7,11 +7,13 @@ const SubscriptionManager = require('../../subscriptionManager')
 /**
  * A/B testing middleware and routes, serves routeA, then routeB
  * will have future functionality to end test
+ * @param {Object} appConfig the application config
  * @param {String} routeA the relative path to a index.html file
  * @param {String} routeB the relative path to another index.html file
+ * @param {Object} newrelic optional, the New Relic node agent
  * @returns {Router}
 **/ 
-module.exports = (appConfig, routeA, routeB) => {
+module.exports = (appConfig, routeA, routeB, newrelic) => {
   const router = express.Router()
   const subscriptionManager = new SubscriptionManager(appConfig)
   const authValue = appConfig.getAuthString()
@@ -48,6 +50,10 @@ module.exports = (appConfig, routeA, routeB) => {
     if (checkPageVersion(pageVersion)) {
       logger.info(`new subscription from page ${pageVersion}`) 
       subscriptionManager.add(pageVersion)
+
+      if (newrelic) {
+        newrelic.recordCustomEvent('subscription', { page_version: pageVersion })
+      }
       return res.sendStatus(201)
     }
     else {

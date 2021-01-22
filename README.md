@@ -26,7 +26,7 @@ npm i
 ```
 Run the application
 ```
-node server.js config/app_config.js
+node server.js config/default/app_config.js
 ```
 
 #### Docker
@@ -38,7 +38,10 @@ Run the container
 ```
 docker run -d -p 3001:3001 ab-tester
 ```
-
+**note**: It can also be deployed with New Relic instrumentation:
+```
+docker run -d -p 3001:3001 -e NEW_RELIC_LICENSE_KEY=<your NR license key> NEW_RELIC_APP_NAME=<the display name> ab-tester
+```
 ### Modifying the configuration
 The A/B test is driven through a configuration file. The default file is located here `config/app_config.js`.
 ```

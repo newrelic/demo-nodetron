@@ -1,5 +1,15 @@
+'use strict'
 require('dotenv').config()
 const logger = require("./common/logger")
+
+if (!newrelic) {
+  try {
+    var newrelic = require('newrelic')
+  }
+  catch (err) {
+    logger.error('Unable to load New Relic Agent', err)
+  }
+}
 
 const express = require('express'),
   app = express(),
@@ -19,10 +29,10 @@ else {
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
 
-  app.use(aBTestRoutes(config, '/a/index.html', '/b/index.html'))
+  app.use(aBTestRoutes(config, '/a/index.html', '/b/index.html', newrelic))
   app.use('/', express.static('public'))
 
-  app.use(function (err, req, res, next) {
+  app.use((err, req, res, next) => {
     logger.error(err.message)
     res.status(500).send(err.message)
     next(err)

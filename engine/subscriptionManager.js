@@ -19,8 +19,6 @@ class SubscriptionManager {
     this._weightedRandomFn = this._initWeightedRandomFunction(unsubRates.b)
   }
 
-
-
   /**
    * Returns all subscriptions
    * returns {Object[]} 

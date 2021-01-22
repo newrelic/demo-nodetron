@@ -41,8 +41,6 @@ class AppConfig{
       return config.rolloverThreshold
     }
 
-    // Other values like A/B weighting should be controlled here
-
     read() {
       if (this.config == null) {
         logger.info(`Loading config with ${this.filename}`)
