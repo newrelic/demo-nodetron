@@ -67,10 +67,10 @@
                 "host1"
             ],
             "params": {
-              "a_unsub_rate": 100,
-              "b_unsub_rate": 0,
-              "auth_string": "testauth",
-              "rollover_threshold": 100
+              "a_unsub_rate": 30,
+              "b_unsub_rate": 70,
+              "auth_string": "Bearer ABC123",
+              "rollover_threshold": 1000
             }
         }
     ],
@@ -93,7 +93,7 @@
             "display_name": "abtest-simHost2",
             "provider": "aws",
             "type": "ec2",
-            "size": "t3.medium"
+            "size": "t3.micro"
         }
  
     ],

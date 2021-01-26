@@ -50,25 +50,25 @@ After setting up your demo-deployer environment, deploy with this command:
 ```
 docker run -it\
     -v $HOME/demo-deployer/configs/:/mnt/deployer/configs/\
-    --entrypoint ruby ghcr.io/newrelic/deployer main.rb -d <demo-url>
+    --entrypoint ruby ghcr.io/newrelic/deployer main.rb -d <ABTESTER CONFIG URL>
 ```
-
+   
 To add the A/B Tester to your demo-deployer configuration use this structure:
 ```
 {
     "id": "abtester",
     "display_name": "Newsletter",
-    "local_source_path": "/mnt/demotron/demo-nodetron",
+    "source_repository": "https://github.com/newrelic/demo-nodetron.git",
     "deploy_script_path": "deploy/linux/roles",
     "port": 5001,
     "destinations": [
         "host1"
     ],
     "params": {
-      "a_unsub_rate": 100,
-      "b_unsub_rate": 0,
-      "auth_string": "testauth",
-      "rollover_threshold": 100
+      "a_unsub_rate": 30,
+      "b_unsub_rate": 70,
+      "auth_string": "Bearer ABC123",
+      "rollover_threshold": 1000
     }
 }
 ```
@@ -110,15 +110,6 @@ This is used to check for authentication on the `/unsubscriptions` and `/end-tes
 #### rolloverThreshold
 This is used to ensure that the list of subscriptions doesn't grow indefinitely. Subscriptions at the end of the list will be removed when it goes over this threshold. The value must be a positive integer.
 * Default: 1000
-
-### Use with the demo-deployer
-The [demo-deployer](https://github.com/newrelic/demo-deployer) can be used to deploy this application with New Relic instrumentation and automatic web traffic.
-If you have already setup your demo-deployer environment, run the following command to deploy your own instance.
-```
-docker run -it -v $HOME/demo-deployer/configs:/mnt/deployer/configs/ ghcr.io/newrelic/deployer https://raw.github.com
-```
-
-MORE TEXT HERE ABOUT PASSING PARAMETERS
 
 ### API
 #### POST /subscribe
