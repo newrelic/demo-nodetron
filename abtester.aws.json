@@ -44,12 +44,6 @@
                                     "params": [
                                         "#subscribeBtn"
                                     ]
-                                },
-                                {
-                                    "name": "sleepMs",
-                                    "params": [
-                                        "1000"
-                                    ]
                                 }
                             ]
                         }
