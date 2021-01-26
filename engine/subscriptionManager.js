@@ -69,7 +69,7 @@ class SubscriptionManager {
    * @param {Number} rolloverThreshold a positive integer
   **/
   _validateConfiguration(unsubRates, rolloverThreshold) {
-    if (!unsubRates || !unsubRates.a || !unsubRates.b) {
+    if (unsubRates === undefined || unsubRates.a === undefined || unsubRates.b === undefined) {
       throw new Error('unsubRates not defined')
     }
 
@@ -78,7 +78,7 @@ class SubscriptionManager {
     }
 
     if (unsubRates.a < 0 || unsubRates.b < 0) {
-      throw new Error('unsubRates for "a" and "b" must be positive integers')
+      throw new Error('unsubRates for "a" and "b" must be non-negative integers')
     }
 
     if ((unsubRates.a + unsubRates.b) !== 100) {

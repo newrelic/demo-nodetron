@@ -4,15 +4,16 @@
 A/B Tester is a demo application that conducts an A/B test on newsletter sign ups. Currently it just serves two versions of a sign up page, more coming soon!
 
 ## Contents
-* [Requirements](#requirements)
+* [Getting started](#getting-started)
   * [Development](#development)
   * [Docker](#docker)
+  * [Demo-deployer](#demo-deployer)
 * [Modifying the configuration](#modifying-the-configuration)
-* [API](#api)
+* [API](#api)  
 * [Contributing](#contributing)
 * [License](#license)
 
-### Requirements
+### Getting started
 #### Development
 * Node.js ^14.15.4
 * NPM     ^6.14.10
@@ -28,7 +29,7 @@ Run the application
 ```
 node server.js config/default/app_config.js
 ```
-
+  
 #### Docker
 This application can also be run through Docker.
 ```
@@ -42,6 +43,38 @@ docker run -d -p 3001:3001 ab-tester
 ```
 docker run -d -p 3001:3001 -e NEW_RELIC_LICENSE_KEY=<your NR license key> NEW_RELIC_APP_NAME=<the display name> ab-tester
 ```
+
+#### Demo-deployer
+A/B Tester can also be deployer using the [demo-deployer](https://github.com/newrelic/demo-deployer). This deployment includes the New Relic host integration and simulated web traffic.    
+After setting up your demo-deployer environment, deploy with this command:
+```
+docker run -it\
+    -v $HOME/demo-deployer/configs/:/mnt/deployer/configs/\
+    --entrypoint ruby ghcr.io/newrelic/deployer main.rb -d <demo-url>
+```
+
+To add the A/B Tester to your demo-deployer configuration use this structure:
+```
+{
+    "id": "abtester",
+    "display_name": "Newsletter",
+    "local_source_path": "/mnt/demotron/demo-nodetron",
+    "deploy_script_path": "deploy/linux/roles",
+    "port": 5001,
+    "destinations": [
+        "host1"
+    ],
+    "params": {
+      "a_unsub_rate": 100,
+      "b_unsub_rate": 0,
+      "auth_string": "testauth",
+      "rollover_threshold": 100
+    }
+}
+```
+**Note**: The `params` field is optional and just allows you to change the default configuration values of the A/B Tester. These values are then propagated to their equivalent field in the application config. More on these values below.
+
+
 ### Modifying the configuration
 The A/B test is driven through a configuration file. The default file is located here `config/app_config.js`.
 ```
@@ -61,7 +94,7 @@ The port that the server should listen on.
 * Default: 3001
 
 #### unsubRates
-An object containing the rate of unsubscriptions for version `a` and `b`. If `a` is 30 and `b` is 70, then 30% of unsubscriptions will come from `a` and the 70% from `b`. They must be positive integers that add up to 100. 
+An object containing the rate of unsubscriptions for version `a` and `b`. If `a` is 30 and `b` is 70, then 30% of unsubscriptions will come from `a` and the 70% from `b`. They must be non-negative integers that add up to 100. 
 * Default: 
 ```
 {
@@ -77,6 +110,15 @@ This is used to check for authentication on the `/unsubscriptions` and `/end-tes
 #### rolloverThreshold
 This is used to ensure that the list of subscriptions doesn't grow indefinitely. Subscriptions at the end of the list will be removed when it goes over this threshold. The value must be a positive integer.
 * Default: 1000
+
+### Use with the demo-deployer
+The [demo-deployer](https://github.com/newrelic/demo-deployer) can be used to deploy this application with New Relic instrumentation and automatic web traffic.
+If you have already setup your demo-deployer environment, run the following command to deploy your own instance.
+```
+docker run -it -v $HOME/demo-deployer/configs:/mnt/deployer/configs/ ghcr.io/newrelic/deployer https://raw.github.com
+```
+
+MORE TEXT HERE ABOUT PASSING PARAMETERS
 
 ### API
 #### POST /subscribe
