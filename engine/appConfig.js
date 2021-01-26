@@ -1,71 +1,48 @@
 'use strict'
-var logger = require("./logger")
-const fileUtil = require("./fileUtil")
+var logger = require("./common/logger")
+const fileUtil = require("./common/fileUtil")
 
 var instance = null
 
 class AppConfig{
 
-    constructor(filename, loaderFunc = null){
+    constructor(filename, loaderFunc = null) {
         this.config = null
         this.filename = filename
         this.loaderFunc = loaderFunc || fileUtil.readJsonFile
     }
 
-    static createInstance(filename, loaderFunc = null){
+    static createInstance(filename, loaderFunc = null) {
       instance = new AppConfig(filename, loaderFunc)
       return instance
     }
 
-    static getInstance(){
+    static getInstance() {
       return instance
     }
 
-    getAppId(){
-        const config = this.read()
-        return config.id
-    }
-
-    getPort(){
+    getPort() {
       const config = this.read()
       return config.port
     }
 
-    getDelayStartMs(){
+    getAuthString() {
       const config = this.read()
-      return config.delayStartMs
+      return config.authString
     }
 
-    getDependencyEndpoint(endpoint){
-      var dependencyEndpoints = []
+    getUnsubRates() {
       const config = this.read()
-      config.dependencies.forEach(dependency => {
-        const id = dependency.id
-        const urls = dependency.urls
-        logger.info(`Found dependency with id:${id} and urls:${urls}`)
-        urls.forEach(url => {
-          var dependencyEndpoint = url+endpoint
-          dependencyEndpoints.push(dependencyEndpoint)
-        })
-      })
-      return dependencyEndpoints
+      return config.unsubRates
     }
 
-    getDatabaseConfiguration(){
+    getRolloverThreshold() {
       const config = this.read()
-      const database = config.database
-
-      if (database.user     &&
-          database.password && 
-          database.host     && 
-          database.port
-      ){
-        return database
-      }
+      return config.rolloverThreshold
     }
-      
-    read(){
-      if (this.config == null){
+
+    read() {
+      if (this.config == null) {
         logger.info(`Loading config with ${this.filename}`)
         this.config = this.loaderFunc(this.filename)
       }
