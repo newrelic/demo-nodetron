@@ -102,8 +102,7 @@
             {
                 "id": "nr_infra",
                 "resource_ids": [
-                    "host1",
-                    "host2"
+                    "host1"
                 ],
                 "provider": "newrelic",
                 "source_repository": "https://github.com/newrelic/demo-newrelic-instrumentation.git",
