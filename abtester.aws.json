@@ -44,6 +44,12 @@
                                     "params": [
                                         "#subscribeBtn"
                                     ]
+                                },
+                                {
+                                    "name": "sleepMs",
+                                    "params": [
+                                        1000
+                                    ]
                                 }
                             ]
                         }
@@ -54,7 +60,7 @@
         {
             "id": "abtester",
             "display_name": "Newsletter",
-            "local_source_path": "/mnt/demotron/demo-nodetron",
+            "source_repository": "-b DEMO-2536-ab-test-app https://github.com/newrelic/demo-nodetron.git",
             "deploy_script_path": "deploy/linux/roles",
             "port": 5001,
             "destinations": [
