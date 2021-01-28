@@ -14,7 +14,7 @@
                     "content": [
                         {
                             "id": "unsubscriptionTraffic",
-                            "rpm": 10,
+                            "rpm": 1,
                             "steps": [
                                 {
                                     "name": "httpPostJson",
@@ -27,7 +27,7 @@
                         },
                         {
                             "id": "subscriptionTraffic",
-                            "rpm": 30,
+                            "rpm": 5,
                             "steps": [
                                 {
                                     "name": "browserStart",
