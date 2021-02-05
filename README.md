@@ -27,7 +27,7 @@ npm i
 ```
 Run the application
 ```
-node server.js config/default/app_config.js
+node server.js config/default/app_config.json
 ```
   
 #### Docker
