@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         cloud_provider: [aws, azure, gcp]
-        scenario: [happy]
+        scenario: [happy, database]
 
     steps:
       - name: checkout repo

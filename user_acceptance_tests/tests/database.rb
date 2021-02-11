@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'rest-client'
 require 'json'
 
-describe 'Deployment Tests' do
+describe 'Database User Acceptance Tests' do
   let(:service_url) do
     get_service_url_json(
       get_test_input(ENV['TEST_INPUT_FILE_LOCATION'])
@@ -30,6 +30,11 @@ describe 'Deployment Tests' do
     expect(response.code).must_equal(200)
   end
 
+  it 'GET /api/query should return HTTP 200 OK' do
+    response = RestClient.get("#{service_url}/api/query")
+    expect(response.code).must_equal(200)
+  end
+
   def get_test_input(file_path)
     test_input = File.read(file_path)
     test_input
@@ -38,6 +43,7 @@ describe 'Deployment Tests' do
   def get_service_url_json(test_input)
     service_url = JSON.parse(test_input)
                       .fetch('services', [{}])
+                      .filter { |s| s['id'] == 'nodetron' }
                       .first
                       .fetch('urls', [])
                       .first

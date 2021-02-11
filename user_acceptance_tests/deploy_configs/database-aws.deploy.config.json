@@ -1,0 +1,42 @@
+{
+    "services": [
+        {
+            "id": "mysql",
+            "source_repository": "https://github.com/newrelic/demo-services.git",
+            "deploy_script_path": "deploy/mariadb/linux/roles",
+            "port": 6002,
+            "destinations": [
+                "host"
+            ],
+            "params": {
+                "database_user": "demotron",
+                "database_password": "[credential:secrets:database_password]",
+                "database_root_password": "[credential:secrets:database_root_password]"
+            }
+        },
+        {
+            "id": "nodetron",
+            "local_source_path": "demo-nodetron",
+            "deploy_script_path": "deploy/linux/roles",
+            "port": 6001,
+            "destinations": [
+                "host"
+            ],
+            "params": {
+                "database_user": "[service:mysql:params:database_user]",
+                "database_password": "[credential:secrets:database_password]",
+                "database_host": "[resource:host1:ip]",
+                "database_port": "[service:mysql:port]"
+            }
+        }
+    ],
+    "resources": [
+        {
+            "id": "host",
+            "display_name": "Inventory host",
+            "provider": "aws",
+            "type": "ec2",
+            "size": "t3.small"
+        }
+    ]
+}
