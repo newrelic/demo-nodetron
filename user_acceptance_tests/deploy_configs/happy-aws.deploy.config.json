@@ -1,0 +1,21 @@
+{
+    "services": [
+        {
+            "id": "nodetron",
+            "local_source_path": "demo-nodetron",
+            "deploy_script_path": "deploy/linux/roles",
+            "port": 5001,
+            "destinations": [
+                "host"
+            ]
+        }
+    ],
+    "resources": [
+        {
+            "id": "host",
+            "provider": "aws",
+            "type": "ec2",
+            "size": "t2.micro"
+        }
+    ]
+}

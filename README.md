@@ -142,6 +142,8 @@ Cron jobs can be registered upon deployment using the demo-deployer Files config
 }
 ```
 
+## User Acceptance Tests
+The `user_acceptance_tests` folder contains automated tests which run on Github and are triggered by PR events. For more information, see [User Acceptance Tests](user_acceptance_tests/README.md)
 
 ## Contributing
 
