@@ -1,6 +1,12 @@
 'use strict'
-var newrelic = require('newrelic')
-
+if (!newrelic) {
+  try {
+    var newrelic = require('newrelic')
+  }
+  catch (err) {
+    console.error('Unable to load New Relic Agent', err)
+  }
+}
 require('dotenv').config()
 const logger = require("./common/logger")
 
