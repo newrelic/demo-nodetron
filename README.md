@@ -41,7 +41,7 @@ docker run -d -p 3001:3001 ab-tester
 ```
 **note**: It can also be deployed with New Relic instrumentation:
 ```
-docker run -d -p 3001:3001 -e NEW_RELIC_LICENSE_KEY=<your NR license key> NEW_RELIC_APP_NAME=<the display name> ab-tester
+docker run -d -p 3001:3001 -e NEW_RELIC_LICENSE_KEY=<your NR license key> -e NEW_RELIC_APP_NAME=<the display name> ab-tester
 ```
 
 #### Demo-deployer
