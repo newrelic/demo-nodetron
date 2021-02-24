@@ -12,7 +12,7 @@ const SubscriptionManager = require('../../subscriptionManager')
  * @param {String} routeB the relative path to another index.html file
  * @param {Object} newrelic optional, the New Relic node agent
  * @returns {Router}
-**/ 
+**/
 module.exports = (appConfig, routeA, routeB, newrelic) => {
   const router = express.Router()
   const subscriptionManager = new SubscriptionManager(appConfig)
@@ -31,15 +31,18 @@ module.exports = (appConfig, routeA, routeB, newrelic) => {
 
   router.use((req, res, next) => {
     if (req.url !== '/') return next()
-   
+
     if (isTestRunning) {
-      currentRoute = currentRoute === routeA ? routeB : routeA
+      currentRoute = Math.random() < 0.5 ? routeA : routeB
     }
     else {
       logger.info('Test ended, serving a')
     }
 
     logger.info(`serving ${currentRoute}`)
+    if (newrelic) {
+        newrelic.recordCustomEvent('pageView', { page_version: currentRoute === routeA ? 'a' : 'b' })
+    }
     req.url = currentRoute
     next()
   })
@@ -48,7 +51,7 @@ module.exports = (appConfig, routeA, routeB, newrelic) => {
     const pageVersion = req.body.page_version
 
     if (checkPageVersion(pageVersion)) {
-      logger.info(`new subscription from page ${pageVersion}`) 
+      logger.info(`new subscription from page ${pageVersion}`)
       subscriptionManager.add(pageVersion)
 
       if (newrelic) {
@@ -78,7 +81,7 @@ module.exports = (appConfig, routeA, routeB, newrelic) => {
 
     if (checkPageVersion(pageVersion) && isTestRunning) {
       currentRoute = pageVersion.toLowerCase() === 'a' ? routeA : routeB
-      isTestRunning = false       
+      isTestRunning = false
       logger.info(`Test ended, serving version "${pageVersion}" on all requests`)
       return res.sendStatus(200)
     }
@@ -103,7 +106,7 @@ function authMiddleware(value) {
   return (req, res, next) => {
     const auth = req.get('Authorization')
     if (auth && auth === value) {
-      return next() 
+      return next()
     }
 
     res.sendStatus(401)
