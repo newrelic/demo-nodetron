@@ -40,7 +40,9 @@ module.exports = (appConfig, routeA, routeB, newrelic) => {
     }
 
     logger.info(`serving ${currentRoute}`)
-    newrelic.recordCustomEvent('pageView', { page_version: currentRoute === routeA ? 'a' : 'b' })
+    if (newrelic) {
+        newrelic.recordCustomEvent('pageView', { page_version: currentRoute === routeA ? 'a' : 'b' })
+    }
     req.url = currentRoute
     next()
   })
