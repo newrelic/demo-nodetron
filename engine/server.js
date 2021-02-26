@@ -11,6 +11,7 @@ require('dotenv').config()
 const logger = require("./common/logger")
 
 const express = require('express'),
+  cors = require('cors'),
   app = express(),
   bodyParser = require('body-parser'),
   appConfig = require('./appConfig'),
@@ -25,6 +26,7 @@ else {
   const configFilename = process.argv[2]
   const config = appConfig.createInstance(configFilename)
 
+  app.use(cors())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
 
