@@ -1,7 +1,7 @@
 'use strict';
-var logger = require("../../logger")
+var logger = require("../../lib/logger")
 const baseController = require("../baseController")
-const tronResponse = require("../../tronResponse")
+const tronResponse = require("../../lib/tronResponse")
 var behaviorsController = require('../../api/behaviors/controller')
 
 exports.validateMessage = function(httpRequest, httpResponse, next) {

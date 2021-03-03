@@ -6,10 +6,12 @@ RUN apt update
 RUN apt -y install wget curl
 
 RUN mkdir /mnt/nodetron
-ADD ./engine /mnt/nodetron
-WORKDIR /mnt/nodetron
+COPY ./engine/package.json ./engine/package-lock.json /mnt/nodetron/
 
+WORKDIR /mnt/nodetron
 RUN npm install
+
+COPY ./engine /mnt/nodetron/
 
 EXPOSE 3001
 

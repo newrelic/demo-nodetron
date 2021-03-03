@@ -1,7 +1,7 @@
 'use strict';
-const behaviorRepository = require("../../behaviors/repository")
+const behaviorRepository = require("../../lib/behaviors/repository")
 const instance = new behaviorRepository()
-const logger = require("../../logger")
+const logger = require("../../lib/logger")
 
 exports.getBehaviors = function(req, res, next) {
     logger.info('/behaviors', 'get')

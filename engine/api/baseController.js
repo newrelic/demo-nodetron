@@ -1,5 +1,5 @@
 'use strict';
-const appConfig = require('../appConfig')
+const appConfig = require('../lib/appConfig')
 
 exports.ensureAppIsStarted = function() {
     var config = appConfig.getInstance()

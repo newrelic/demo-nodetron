@@ -1,7 +1,7 @@
 'use strict'
 var assert = require('assert')
-var behaviorRepository = require('../behaviors/repository')
-const Behavior = require('../behaviors/behavior')
+var behaviorRepository = require('../lib/behaviors/repository')
+const Behavior = require('../lib/behaviors/behavior')
 
 describe(`BehaviorRepository Test`, function () {
 

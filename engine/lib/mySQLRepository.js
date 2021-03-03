@@ -2,13 +2,14 @@
 
 const knex = require('knex')
 
-const inventoryStore = require('./inventoryStore')
-let instance = new inventoryStore("data/inventory.json")
+const logger = require('./logger')
+const inventoryLoader = require("./inventoryLoader")
 
-class DatabaseManager {
-  constructor(databaseName, databaseConfiguration) {
+class DatabaseRepository {
+  constructor(databaseName, databaseConfiguration, invLoader = inventoryLoader) {
     this._databaseName = databaseName
     this._connection = undefined
+    this._invLoader = invLoader
 
     const { host, port, user, password } = databaseConfiguration
     this._configuration = {
@@ -22,6 +23,7 @@ class DatabaseManager {
   }
 
   async initialize() {
+    logger.info('Initializing MySQL database')
     const tableName = 'inventory'
     await this.createDatabase()
 
@@ -32,6 +34,7 @@ class DatabaseManager {
 
     await connection.schema.dropTableIfExists(tableName)
 
+    logger.info('Creating table with name: inventory')
     await connection.schema.createTable('inventory', table => {
       table.string('id')
       table.string('item')
@@ -40,8 +43,9 @@ class DatabaseManager {
       table.string('description')
     })
 
-    const inventoryData = instance.findAll()
+    const inventoryData = this._invLoader()
     for (const item of inventoryData) {
+      logger.info(`Inserting inventory with id: ${item.id}`)
       await connection(tableName).insert(item)
     }
 
@@ -61,17 +65,32 @@ class DatabaseManager {
       }
     })
 
+    logger.info(`Creating database with name: ${this._databaseName}`)
     await rawConnection.raw(`CREATE DATABASE IF NOT EXISTS ${this._databaseName}`)
     rawConnection.destroy()
   }
 
-  async query() {
+  async findAll() {
     if (!this._connection) {
       await this.initialize()
     }
 
-    return this._connection.select().from('inventory')
+    const results = await this._connection.select().from('inventory')
+    return results
+  }
+
+  async findOrNull(id) {
+    if (!this._connection) {
+      await this.initialize()
+    }
+
+    const results = await this._connection.select().from('inventory').where({ id })
+    if (results.length > 0) {
+      return results[0]
+    }
+
+    return null
   }
 }
 
-module.exports = DatabaseManager
+module.exports = DatabaseRepository

@@ -1,5 +1,5 @@
 var assert = require('assert')
-var tronResponse = require('../tronResponse')
+var tronResponse = require('../lib/tronResponse')
 var appConfigTest = require('./appConfigTest')
 
 describe(`TronResponse Test`, function () {

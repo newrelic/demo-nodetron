@@ -1,12 +1,11 @@
 'use strict'
 var logger = require("./logger")
-const fileUtil = require("./fileUtil")
+const inventoryLoader = require("./inventoryLoader")
 
-class InventoryStore{
-    constructor(inventoryFilename, loaderFunc = null){
+class LocalStorageRepository {
+    constructor(invLoader = inventoryLoader){
         this.inventory = null
-        this.inventoryFilename = inventoryFilename
-        this.loaderFunc = loaderFunc || fileUtil.readJsonFile
+        this.invLoader = invLoader
     }
 
     findAll(){
@@ -14,7 +13,7 @@ class InventoryStore{
         return this.getInventory()
     }
 
-    find(id){
+    findOrNull(id){
         logger.info(`Find inventory item for id ${id}`)
         const inventory = this.getInventory()
         for (const index in inventory) {
@@ -28,12 +27,11 @@ class InventoryStore{
 
     getInventory(){
         if (this.inventory == null){
-          logger.info(`Loading inventory with ${this.inventoryFilename}`)
-          this.inventory = this.loaderFunc(this.inventoryFilename)
+            this.inventory = this.invLoader.load()
         }
         return this.inventory
     }
 
 }
 
-module.exports = InventoryStore
+module.exports = LocalStorageRepository

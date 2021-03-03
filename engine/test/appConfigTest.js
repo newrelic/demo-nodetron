@@ -1,5 +1,5 @@
 var assert = require('assert')
-var appConfig = require('../appConfig')
+var appConfig = require('../lib/appConfig')
 
 describe(`AppConfig Test`, function () {
     it(`should have an id`, function() {

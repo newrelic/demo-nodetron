@@ -51,7 +51,7 @@ class AppConfig{
       return dependencyEndpoints
     }
 
-    getDatabaseConfiguration(){
+    getMySQLConfiguration(){
       const config = this.read()
       const database = config.database
 

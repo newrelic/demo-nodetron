@@ -1,8 +1,8 @@
 'use strict';
 
-const logger = require('../../logger')
+const logger = require('../../lib/logger')
 const baseController = require('../baseController')
-const tronResponse = require('../../tronResponse')
+const tronResponse = require('../../lib/tronResponse')
 
 exports.executeQuery = function(databaseManager) {
   return function(httpRequest, httpResponse) {

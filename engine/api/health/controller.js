@@ -1,6 +1,6 @@
 'use strict';
 const healthModules = require("../../health/modules")
-var logger = require("../../logger")
+var logger = require("../../lib/logger")
 
 let instance = new healthModules()
 
