@@ -1,12 +1,10 @@
 'use strict';
 
 const knex = require('knex')
-
 const logger = require('./logger')
-const inventoryLoader = require("./inventoryLoader")
 
 class DatabaseRepository {
-  constructor(databaseName, databaseConfiguration, invLoader = inventoryLoader) {
+  constructor(databaseName, databaseConfiguration, invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
     this._databaseName = databaseName
     this._connection = undefined
     this._invLoader = invLoader

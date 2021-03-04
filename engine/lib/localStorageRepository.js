@@ -1,33 +1,33 @@
 'use strict'
 var logger = require("./logger")
-const inventoryLoader = require("./inventoryLoader")
+const fileUtil = require("./fileUtil")
 
 class LocalStorageRepository {
-    constructor(invLoader = inventoryLoader){
+    constructor(invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
         this.inventory = null
         this.invLoader = invLoader
     }
 
-    findAll(){
+    findAll() {
         logger.info(`Find all inventory`)
         return this.getInventory()
     }
 
-    findOrNull(id){
+    findOrNull(id) {
         logger.info(`Find inventory item for id ${id}`)
         const inventory = this.getInventory()
         for (const index in inventory) {
           const item = inventory[index]
-          if(item['id'] == id) {
+          if (item['id'] == id) {
             return item
           }
         }
         return null
     }
 
-    getInventory(){
-        if (this.inventory == null){
-            this.inventory = this.invLoader.load()
+    getInventory() {
+        if (this.inventory == null) {
+            this.inventory = this.invLoader()
         }
         return this.inventory
     }
