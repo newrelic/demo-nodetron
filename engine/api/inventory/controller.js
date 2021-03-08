@@ -19,7 +19,7 @@ exports.getInventories = function(inventoryRepository) {
             tron.buildJsonResponse(httpResponse, data)
         }
         catch (err) {
-            next(error)
+            next(err)
         }
     }
 }

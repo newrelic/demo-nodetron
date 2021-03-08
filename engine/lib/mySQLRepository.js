@@ -2,6 +2,7 @@
 
 const knex = require('knex')
 const logger = require('./logger')
+const fileUtil = require('./fileUtil')
 
 class DatabaseRepository {
   constructor(databaseName, databaseConfiguration, invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
