@@ -77,8 +77,8 @@ class DatabaseRepository {
       }
     })
 
-    logger.info(`Creating database with name: ${config.name}`)
-    await rawConnection.raw(`CREATE DATABASE IF NOT EXISTS ${config.name}`)
+    logger.info(`Creating database with name: ${config.database}`)
+    await rawConnection.raw(`CREATE DATABASE IF NOT EXISTS ${config.database}`)
     rawConnection.destroy()
   }
 
