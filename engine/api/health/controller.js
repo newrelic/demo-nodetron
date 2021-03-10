@@ -12,11 +12,11 @@ exports.getHealth = function(req, res, next) {
 };
 
 exports.getDatabaseHealth = function(mySQLRepository) {
-    return function(req, res, next) {
+    return function(req, res) {
         logger.info('/database/health', 'get')
         if (mySQLRepository instanceof MySQLRepository && mySQLRepository.isConnected()) {
             return res.sendStatus(200)
         }
-        res.sendStatus(500)
+        res.status(500).send({ error: "Not connected to a database." })
     }
 }

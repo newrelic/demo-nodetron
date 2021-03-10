@@ -39,14 +39,32 @@ describe(`AppConfig Test`, function () {
         assert.equal(dependencyEndpoints[0], "https://somewhere.newrelic.com/api/endpoint1")
         assert.equal(dependencyEndpoints[1], "https://else.newrelic.com/api/endpoint1")
     })
+
+    it(`should have a configured database`, function() {
+        var config = { name: 'testdb', port: '3001', host: 'fakehost', user: 'fakeuser', password: 'fakepass' }
+        var appConfig = AppConfigTest.givenAppConfig("testtron", 3000, 0, null, config)
+        assert.deepStrictEqual(appConfig.getMySQLConfiguration(), config)
+    })
+
+    it(`should NOT have a configured database`, function() {
+        var appConfig = AppConfigTest.givenAppConfig("testtron", 3000, 0)
+        assert.equal(appConfig.getMySQLConfiguration(), null)
+    })
+
+    it(`should NOT have a configured database with partial config values`, function() {
+        var config = { name: 'testdb', port: '', host: 'fakehost', password: 'fakepass' }
+        var appConfig = AppConfigTest.givenAppConfig("testtron", 3000, 0, null, config)
+        assert.equal(appConfig.getMySQLConfiguration(), null)
+    })
 })
 
 class AppConfigTest{
-    static givenAppConfig(id, port = 3000, delayStartMs = 0, dependencies = null){
+    static givenAppConfig(id, port = 3000, delayStartMs = 0, dependencies = null, dbConfig = { name: '', port: '', host: '', user: '', password: '' }){
         var raw = {
             "id": id,
             "port": port,
-            "delayStartMs": delayStartMs
+            "delayStartMs": delayStartMs,
+            "database": dbConfig
         }
         if (dependencies != null && dependencies.length>0){
             raw["dependencies"] = dependencies
