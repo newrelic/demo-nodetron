@@ -24,7 +24,7 @@ else{
   app.use('/api', express.static('public'))
 
   const healthRoute = require('./api/health/route')
-  healthRoute(app)
+  healthRoute(app, inventoryRepository)
 
   const inventoryRoute = require('./api/inventory/route')
   inventoryRoute(app, inventoryRepository)

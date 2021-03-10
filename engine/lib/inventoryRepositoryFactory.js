@@ -8,7 +8,7 @@ function inventoryRepositoryFactory(appConfig) {
     const mySQLConfig = appConfig.getMySQLConfiguration()
     if (mySQLConfig) {
         logger.info("MySQL configuration found, using MySQLRepository")
-        return new MySQLRepository(appConfig.getAppId(), mySQLConfig)
+        return new MySQLRepository(mySQLConfig)
     }
     else {
         logger.info("Using LocalStorageRepository")

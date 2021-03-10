@@ -4,5 +4,11 @@
   "delayStartMs": 10000,
   "dependencies": [
     ],
-  "database": {}
+  "database": {
+    "user": "",
+    "password": "",
+    "host": "",
+    "port": "",
+    "name": ""
+  }
 }

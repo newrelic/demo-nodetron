@@ -58,7 +58,8 @@ class AppConfig{
       if (database.user     &&
           database.password && 
           database.host     && 
-          database.port
+          database.port     &&
+          database.name
       ){
         return database
       }

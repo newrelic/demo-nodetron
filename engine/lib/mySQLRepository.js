@@ -5,19 +5,32 @@ const logger = require('./logger')
 const fileUtil = require('./fileUtil')
 
 class DatabaseRepository {
-  constructor(databaseName, databaseConfiguration, invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
-    this._databaseName = databaseName
+  constructor(databaseConfiguration, invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
     this._connection = undefined
     this._invLoader = invLoader
 
-    const { host, port, user, password } = databaseConfiguration
+    const { host, port, user, password, name } = databaseConfiguration
     this._configuration = {
       host,
       port,
       user,
       password,
-      database: databaseName,
+      database: name,
       charset: 'utf8'
+    }
+  }
+
+  async isConnected() {
+    if (!this._connection) {
+      await this.initialize()
+    }
+
+    try {
+      await this._connection.select('1')
+      return true
+    }
+    catch (err) {
+      return false
     }
   }
 
@@ -64,8 +77,8 @@ class DatabaseRepository {
       }
     })
 
-    logger.info(`Creating database with name: ${this._databaseName}`)
-    await rawConnection.raw(`CREATE DATABASE IF NOT EXISTS ${this._databaseName}`)
+    logger.info(`Creating database with name: ${config.name}`)
+    await rawConnection.raw(`CREATE DATABASE IF NOT EXISTS ${config.name}`)
     rawConnection.destroy()
   }
 

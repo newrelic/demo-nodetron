@@ -1,6 +1,7 @@
 'use strict';
 const healthModules = require("../../health/modules")
-var logger = require("../../lib/logger")
+const logger = require("../../lib/logger")
+const MySQLRepository = require("../../lib/mySQLRepository")
 
 let instance = new healthModules()
 
@@ -9,3 +10,13 @@ exports.getHealth = function(req, res, next) {
     res.json(instance.get())
     next()
 };
+
+exports.getDatabaseHealth = function(mySQLRepository) {
+    return function(req, res, next) {
+        logger.info('/database/health', 'get')
+        if (mySQLRepository instanceof MySQLRepository && mySQLRepository.isConnected()) {
+            return res.sendStatus(200)
+        }
+        res.sendStatus(500)
+    }
+}
