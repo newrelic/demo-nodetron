@@ -23,7 +23,6 @@
                 "host"
             ],
             "params": {
-                "delay_start_ms": 0,
                 "database_user": "[service:mysql:params:database_user]",
                 "database_password": "[credential:secrets:database_password]",
                 "database_host": "[resource:host:ip]",

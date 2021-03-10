@@ -1,9 +1,8 @@
 'use strict'
-var logger = require("../../lib/logger")
+const logger = require("../../lib/logger")
 const baseController = require("../baseController")
 const tronResponse = require("../../lib/tronResponse")
-var behaviorsController = require('../../api/behaviors/controller')
-
+const behaviorsController = require('../../api/behaviors/controller')
 
 exports.getInventories = function(inventoryRepository) {
     return async function(httpRequest, httpResponse, next) {
