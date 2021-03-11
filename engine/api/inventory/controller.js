@@ -9,14 +9,14 @@ exports.getInventories = (repo) => async (req, res, next) => {
         baseController.ensureAppIsStarted()
         logger.info('/inventory', 'get')
 
-        behaviorsController.handlePreFunc(req, res)
+        await behaviorsController.handlePreFunc(req, res)
 
         const data = await repo.findAll()
         const tron = new tronResponse()
         tron.setupDownStreamHeaders(req)
-        tron.executeDownstream(`/api/inventory`)
+        await tron.executeDownstream(`/api/inventory`)
 
-        behaviorsController.handlePostFunc(req, res)
+        await behaviorsController.handlePostFunc(req, res)
 
         tron.buildJsonResponse(res, data)
     }
@@ -31,14 +31,14 @@ exports.getInventory = (repo) => async (req, res, next) => {
         const id = req.params.id
         logger.info('/inventory', `/${id}`, 'get')
 
-        behaviorsController.handlePreFunc(req, res)
+        await behaviorsController.handlePreFunc(req, res)
 
         const data = await repo.findOrNull(id)
         const tron = new tronResponse()
         tron.setupDownStreamHeaders(req)
         await tron.executeDownstream(`/api/inventory/${id}`)
 
-        behaviorsController.handlePostFunc(req, res)
+        await behaviorsController.handlePostFunc(req, res)
 
         tron.buildJsonResponse(res, data)
     }
