@@ -16,13 +16,7 @@ class LocalStorageRepository {
     findOrNull(id) {
         logger.info(`Find inventory item for id ${id}`)
         const inventory = this.getInventory()
-        for (const index in inventory) {
-          const item = inventory[index]
-          if (item['id'] == id) {
-            return item
-          }
-        }
-        return null
+        return inventory.find((item) => item.id === id) || null
     }
 
     getInventory() {
