@@ -16,12 +16,10 @@ const handleFunc = function(req, res, step) {
     });
 };
 
-exports.handlePreFunc = function(req, res, next) {
+exports.handlePreFunc = function(req, res) {
     handleFunc(req, res, "PRE")
-    next()
 };
 
-exports.handlePostFunc = function(req, res, next) {
+exports.handlePostFunc = function(req, res) {
     handleFunc(req, res, "POST")
-    next()
 };

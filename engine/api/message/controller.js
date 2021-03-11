@@ -1,20 +1,20 @@
 'use strict';
-var logger = require("../../lib/logger")
+const logger = require("../../lib/logger")
 const baseController = require("../baseController")
 const tronResponse = require("../../lib/tronResponse")
-var behaviorsController = require('../../api/behaviors/controller')
+const behaviorsController = require('../../api/behaviors/controller')
 
 exports.validateMessage = function(httpRequest, httpResponse, next) {
     baseController.ensureAppIsStarted()
-    var message = httpRequest.query.message
+    const message = httpRequest.query.message
     logger.info('/validateMessage', 'get', message)
-    behaviorsController.handlePreFunc(httpRequest, httpResponse, function(){})
-    var data = { "result": true }
-    var tron = new tronResponse()
+    behaviorsController.handlePreFunc(httpRequest, httpResponse)
+    const data = { "result": true }
+    const tron = new tronResponse()
     tron.setupDownStreamHeaders(httpRequest)
     tron.executeDownstream(`/api/validateMessage?message=${message}`)
     .then( () => {
-        behaviorsController.handlePostFunc(httpRequest, httpResponse, function(){})
+        behaviorsController.handlePostFunc(httpRequest, httpResponse)
         tron.buildJsonResponse(httpResponse, data)
         next()
     })

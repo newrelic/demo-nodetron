@@ -87,8 +87,7 @@ class DatabaseRepository {
       await this.initialize()
     }
 
-    const results = await this._connection.select().from('inventory')
-    return results
+    return this._connection.select().from('inventory')
   }
 
   async findOrNull(id) {

@@ -1,5 +1,5 @@
 'use strict'
-var logger = require("./logger")
+const logger = require("./logger")
 const fileUtil = require("./fileUtil")
 
 class LocalStorageRepository {
