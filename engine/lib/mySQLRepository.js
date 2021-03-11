@@ -56,10 +56,8 @@ class DatabaseRepository {
     })
 
     const inventoryData = this._invLoader()
-    for (const item of inventoryData) {
-      logger.info(`Inserting inventory with id: ${item.id}`)
-      await connection(tableName).insert(item)
-    }
+    const inserts = inventoryData.map((item) => connection(tableName).insert(item))
+    await Promise.all(inserts)
 
     this._connection = connection
  }
