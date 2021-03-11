@@ -13,5 +13,11 @@
       "urls":["http://localhost:5002"]
     }
   ],
-  "database": {} 
+  "database": {
+    "user": "",
+    "password": "",
+    "host": "",
+    "port": "",
+    "name": ""
+  }
 }

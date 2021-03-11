@@ -1,6 +1,6 @@
 'use strict';
-var logger = require("../../logger")
-const indexStore = require("../../indexStore")
+const logger = require("../../lib/logger")
+const indexStore = require("../../lib/indexStore")
 
 let instance = new indexStore("data/index.json")
 

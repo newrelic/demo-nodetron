@@ -41,9 +41,27 @@ The Nodetron configuration is located in a json configuration file, typically st
       "id":"app3",
       "urls":["http://localhost:5003"]
     }
-  ]
+  ],
+  "database": {
+    "name": "",
+    "host": "",
+    "port": "",
+    "user": "",
+    "password": ""
+  }
 }
 ```
+
+### API endpoints and purposes
+
+| Endpoint               | Purpose                                                                         |
+| -----------------------| --------------------------------------------------------------------------------|
+| /api/inventory             | Fetch a JSON list of inventory items          |
+| /api/inventory/{item_id}   | Fetch a single JSON inventory item by its id      |
+| /api/validateMessage?message=<message>  | Returns true for validation of message |
+| /api/database/health       | Returns HTTP-200 if database is connected, HTTP-500 otherwise |
+| /api/behaviors | Fetch a JSON list of available behaviors | 
+
 
 
 #### Demo-Deployer

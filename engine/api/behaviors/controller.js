@@ -1,7 +1,7 @@
 'use strict';
-const behaviorRepository = require("../../behaviors/repository")
+const behaviorRepository = require("../../lib/behaviors/repository")
 const instance = new behaviorRepository()
-const logger = require("../../logger")
+const logger = require("../../lib/logger")
 
 exports.getBehaviors = function(req, res, next) {
     logger.info('/behaviors', 'get')
@@ -16,12 +16,10 @@ const handleFunc = function(req, res, step) {
     });
 };
 
-exports.handlePreFunc = function(req, res, next) {
+exports.handlePreFunc = function(req, res) {
     handleFunc(req, res, "PRE")
-    next()
 };
 
-exports.handlePostFunc = function(req, res, next) {
+exports.handlePostFunc = function(req, res) {
     handleFunc(req, res, "POST")
-    next()
 };

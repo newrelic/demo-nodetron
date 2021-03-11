@@ -1,45 +1,48 @@
-'use strict';
-var logger = require("../../logger")
+'use strict'
+const logger = require("../../lib/logger")
 const baseController = require("../baseController")
-const inventoryStore = require("../../inventoryStore")
-const tronResponse = require("../../tronResponse")
-var behaviorsController = require('../../api/behaviors/controller')
+const tronResponse = require("../../lib/tronResponse")
+const behaviorsController = require('../../api/behaviors/controller')
 
-let instance = new inventoryStore("data/inventory.json")
+exports.getInventories = (repo) => async (req, res, next) => {
+    try {
+        baseController.ensureAppIsStarted()
+        logger.info('/inventory', 'get')
 
-exports.getInventories = function(httpRequest, httpResponse, next) {
-    baseController.ensureAppIsStarted()
-    logger.info('/inventory', 'get')
-    behaviorsController.handlePreFunc(httpRequest, httpResponse, function(){})
-    var data = instance.findAll()
-    var tron = new tronResponse()
-    tron.setupDownStreamHeaders(httpRequest)
-    tron.executeDownstream(`/api/inventory`)
-    .then( () => {
-        behaviorsController.handlePostFunc(httpRequest, httpResponse, function(){})
-        tron.buildJsonResponse(httpResponse, data)
-        next()
-    })
-    .catch( (error) => {
-        next(error)
-    })
-};
+        behaviorsController.handlePreFunc(req, res)
 
-exports.getInventory = function(httpRequest, httpResponse, next) {
-    baseController.ensureAppIsStarted()
-    var id = httpRequest.params.id
-    logger.info('/inventory', `/${id}`, 'get')
-    behaviorsController.handlePreFunc(httpRequest, httpResponse, function(){})
-    var data = instance.find(id)
-    var tron = new tronResponse()
-    tron.setupDownStreamHeaders(httpRequest)
-    tron.executeDownstream(`/api/inventory/${id}`)
-    .then( () => {
-        behaviorsController.handlePostFunc(httpRequest, httpResponse, function(){})
-        tron.buildJsonResponse(httpResponse, data)
-        next()
-    })
-    .catch( (error) => {
-        next(error)
-    })
+        const data = await repo.findAll()
+        const tron = new tronResponse()
+        tron.setupDownStreamHeaders(req)
+        tron.executeDownstream(`/api/inventory`)
+
+        behaviorsController.handlePostFunc(req, res)
+
+        tron.buildJsonResponse(res, data)
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
+exports.getInventory = (repo) => async (req, res, next) => {
+    try {
+        baseController.ensureAppIsStarted()
+        const id = req.params.id
+        logger.info('/inventory', `/${id}`, 'get')
+
+        behaviorsController.handlePreFunc(req, res)
+
+        const data = await repo.findOrNull(id)
+        const tron = new tronResponse()
+        tron.setupDownStreamHeaders(req)
+        await tron.executeDownstream(`/api/inventory/${id}`)
+
+        behaviorsController.handlePostFunc(req, res)
+
+        tron.buildJsonResponse(res, data)
+    }
+    catch (err) {
+        next(err)
+    }
 }
