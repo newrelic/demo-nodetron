@@ -40,6 +40,34 @@ describe 'Database User Acceptance Tests' do
     expect(response.code).must_equal(200)
   end
 
+  it 'X-DEMO-INVALID-QUERY-PRE behavior should throw on GET /api/inventory' do
+    headers = { 'X-DEMO-INVALID-QUERY-PRE' => 0 }
+    err = _(-> { RestClient.get("#{service_url}/api/inventory", headers) }).must_raise(RestClient::ExceptionWithResponse)
+    expect(err.http_code).must_equal(500)
+    expect(err.response).must_include('ER_NO_SUCH_TABLE')
+  end
+
+  it 'X-DEMO-INVALID-QUERY-POST behavior should throw on GET /api/inventory' do
+    headers = { 'X-DEMO-INVALID-QUERY-POST' => 0 }
+    err = _(-> { RestClient.get("#{service_url}/api/inventory", headers) }).must_raise(RestClient::ExceptionWithResponse)
+    expect(err.http_code).must_equal(500)
+    expect(err.response).must_include('ER_NO_SUCH_TABLE')
+  end
+
+  it 'X-DEMO-INVALID-QUERY-PRE behavior should throw on GET /api/inventory/1' do
+    headers = { 'X-DEMO-INVALID-QUERY-PRE' => 0 }
+    err = _(-> { RestClient.get("#{service_url}/api/inventory/1", headers) }).must_raise(RestClient::ExceptionWithResponse)
+    expect(err.http_code).must_equal(500)
+    expect(err.response).must_include('ER_NO_SUCH_TABLE')
+  end
+
+  it 'X-DEMO-INVALID-QUERY-POST behavior should throw on GET /api/inventory/1' do
+    headers = { 'X-DEMO-INVALID-QUERY-POST' => 0 }
+    err = _(-> { RestClient.get("#{service_url}/api/inventory/1", headers) }).must_raise(RestClient::ExceptionWithResponse)
+    expect(err.http_code).must_equal(500)
+    expect(err.response).must_include('ER_NO_SUCH_TABLE')
+  end
+
   def get_test_input(file_path)
     test_input = File.read(file_path)
     test_input

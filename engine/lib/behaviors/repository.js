@@ -5,6 +5,8 @@ const Compute = require('./compute')
 const Malloc = require('./malloc')
 const InvalidQuery = require('./invalidQuery')
 
+const MySQLRepository = require('../mySQLRepository')
+
 class Repository {
 
   constructor(availableBehaviors = Repository.GetAvailableBehaviors(), behaviorFactoryFunc = Repository.Factory, behaviorLookupFunc = null, appConfigLookupFunc = null) {
@@ -24,9 +26,11 @@ class Repository {
    * Instantiates behaviors
    * @param {String} name The name of the behavior, options are available in the exported `availableBehaviors` array
    * @param {*} value The value associated with the behavior, it can be different for each one
-   * @returns {ThrowException|Compute}
+   * @returns {ThrowException|Compute|Malloc|InvalidQuery}
    */
   static Factory(name, value) {
+    const repo = MySQLRepository.getInstance()
+
     switch (name) {
       case 'THROW':
         return new ThrowException()
@@ -35,7 +39,7 @@ class Repository {
       case 'MALLOC':
         return new Malloc(value)
       case 'INVALID-QUERY':
-        return new InvalidQuery()
+        return new InvalidQuery(repo)
       default:
         return null
     }

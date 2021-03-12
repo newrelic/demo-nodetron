@@ -1,15 +1,15 @@
 'use strict'
 const Behavior = require("./behavior")
-const MySQLRepository = require('../mySQLRepository');
 
 class InvalidQuery extends Behavior {
-    constructor(value) {
-        super("INVALID-QUERY", value)
+    constructor(repository) {
+        super("INVALID-QUERY", undefined)
+        this.repository = repository
     }
 
     async execute() {
         super.execute()
-        const repository = MySQLRepository.getInstance()
+        const repository = this.repository
 
         if (repository) {
             await repository.queryInvalidTable()
