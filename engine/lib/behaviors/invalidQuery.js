@@ -9,10 +9,9 @@ class InvalidQuery extends Behavior {
 
     async execute() {
         super.execute()
-        const repository = this.repository
 
-        if (repository) {
-            await repository.queryInvalidTable()
+        if (this.repository) {
+            await this.repository.queryInvalidTable()
         }
 
         return true

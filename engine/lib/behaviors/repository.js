@@ -29,7 +29,8 @@ class Repository {
    * @returns {ThrowException|Compute|Malloc|InvalidQuery}
    */
   static Factory(name, value) {
-    const repo = MySQLRepository.getInstance()
+    const config = this.appConfigLookupFunc()
+    const repo = MySQLRepository.getInstance(config.getMySQLConfiguration())
 
     switch (name) {
       case 'THROW':

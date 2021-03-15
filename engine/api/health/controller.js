@@ -1,6 +1,7 @@
 'use strict';
 const healthModules = require("../../health/modules")
 const logger = require("../../lib/logger")
+const appConfig = require("../../lib/appConfig")
 const MySQLRepository = require("../../lib/mySQLRepository")
 
 let instance = new healthModules()
@@ -11,12 +12,12 @@ exports.getHealth = function(req, res, next) {
     next()
 };
 
-exports.getDatabaseHealth = function(mySQLRepository) {
-    return function(req, res) {
-        logger.info('/database/health', 'get')
-        if (mySQLRepository instanceof MySQLRepository && mySQLRepository.isConnected()) {
-            return res.sendStatus(200)
-        }
-        res.status(500).send({ error: "Not connected to a database." })
+exports.getDatabaseHealth = function(req, res) {
+    logger.info('/database/health', 'get')
+    const config = appConfig.getInstance()
+    const repo = MySQLRepository.getInstance(config.getMySQLConfiguration())
+    if (repo && repo.isConnected()) {
+        return res.sendStatus(200)
     }
+    res.status(500).send({ error: "Not connected to a database." })
 }

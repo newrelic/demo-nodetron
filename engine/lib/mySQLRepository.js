@@ -6,12 +6,17 @@ const fileUtil = require('./fileUtil')
 
 let instance = null
 
-class DatabaseRepository {
+class MySQLRepository {
   constructor(databaseConfiguration, invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
     this._connection = undefined
     this._invLoader = invLoader
 
-    const { host, port, user, password, name } = databaseConfiguration
+    const { host,
+            port,
+            user,
+            password,
+            name } = databaseConfiguration
+
     this._configuration = {
       host,
       port,
@@ -22,12 +27,15 @@ class DatabaseRepository {
     }
   }
 
-  static createInstance(databaseConfiguration, invLoader) {
-    instance = new DatabaseRepository(databaseConfiguration, invLoader)
-    return instance
-  }
+  static getInstance(databaseConfiguration, invLoader) {
+    if (!databaseConfiguration) {
+      return null
+    }
 
-  static getInstance() {
+    if (instance === null) {
+      instance = new MySQLRepository(databaseConfiguration, invLoader)
+    }
+
     return instance
   }
 
@@ -120,4 +128,4 @@ class DatabaseRepository {
   }
 }
 
-module.exports = DatabaseRepository
+module.exports = MySQLRepository
