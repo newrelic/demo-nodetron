@@ -3,23 +3,24 @@ const behaviorRepository = require("../../lib/behaviors/repository")
 const instance = new behaviorRepository()
 const logger = require("../../lib/logger")
 
-exports.getBehaviors = function(req, res, next) {
+exports.getBehaviors = (req, res, next) => {
     logger.info('/behaviors', 'get')
     res.json(behaviorRepository.GetAvailableBehaviors())
     next()
 };
 
-const handleFunc = function(req, res, step) {
+const handleFunc = async (req, res, step) => {
     const behaviors = instance.getByRequest(req, step)
-    behaviors.forEach(behavior => {
-        behavior.execute()
-    });
+
+    for (const behavior of behaviors) {
+        await behavior.execute()
+    }
 };
 
-exports.handlePreFunc = function(req, res) {
-    handleFunc(req, res, "PRE")
+exports.handlePreFunc = async (req, res) => {
+    await handleFunc(req, res, "PRE")
 };
 
-exports.handlePostFunc = function(req, res) {
-    handleFunc(req, res, "POST")
+exports.handlePostFunc = async (req, res) => {
+    await handleFunc(req, res, "POST")
 };

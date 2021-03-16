@@ -1,15 +1,22 @@
-'use strict';
+'use strict'
 
 const knex = require('knex')
 const logger = require('./logger')
 const fileUtil = require('./fileUtil')
 
-class DatabaseRepository {
+let instance = null
+
+class MySQLRepository {
   constructor(databaseConfiguration, invLoader = () => fileUtil.readJsonFile('data/inventory.json')) {
     this._connection = undefined
     this._invLoader = invLoader
 
-    const { host, port, user, password, name } = databaseConfiguration
+    const { host,
+            port,
+            user,
+            password,
+            name } = databaseConfiguration
+
     this._configuration = {
       host,
       port,
@@ -18,6 +25,18 @@ class DatabaseRepository {
       database: name,
       charset: 'utf8'
     }
+  }
+
+  static getInstance(databaseConfiguration, invLoader) {
+    if (!databaseConfiguration) {
+      return null
+    }
+
+    if (instance === null) {
+      instance = new MySQLRepository(databaseConfiguration, invLoader)
+    }
+
+    return instance
   }
 
   async isConnected() {
@@ -60,7 +79,7 @@ class DatabaseRepository {
     await Promise.all(inserts)
 
     this._connection = connection
- }
+  }
 
   async createDatabase() {
     const config = this._configuration
@@ -71,7 +90,7 @@ class DatabaseRepository {
         host: config.host,
         port: config.port,
         user: config.user,
-        password: config.password 
+        password: config.password
       }
     })
 
@@ -100,6 +119,13 @@ class DatabaseRepository {
 
     return null
   }
+
+  async queryInvalidTable() {
+    if (!this._connection) {
+      await this.initialize()
+    }
+    return this._connection.select().from('inventry')
+  }
 }
 
-module.exports = DatabaseRepository
+module.exports = MySQLRepository
