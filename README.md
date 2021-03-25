@@ -44,36 +44,23 @@ docker run -d -p 3001:3001 ab-tester
 docker run -d -p 3001:3001 -e NEW_RELIC_LICENSE_KEY=<your NR license key> -e NEW_RELIC_APP_NAME=<the display name> ab-tester
 ```
 
-#### Demo-deployer
-A/B Tester can also be deployer using the [demo-deployer](https://github.com/newrelic/demo-deployer). This deployment includes the New Relic host integration and simulated web traffic.    
-After setting up your demo-deployer environment, deploy with this command:
-```
-docker run -it\
-    -v $HOME/demo-deployer/configs/:/mnt/deployer/configs/\
-    --entrypoint ruby ghcr.io/newrelic/deployer main.rb -d <ABTESTER CONFIG URL>
-```
-   
-To add the A/B Tester to your demo-deployer configuration use this structure:
-```
-{
-    "id": "abtester",
-    "display_name": "Newsletter",
-    "source_repository": "https://github.com/newrelic/demo-nodetron.git",
-    "deploy_script_path": "deploy/linux/roles",
-    "port": 5001,
-    "destinations": [
-        "host1"
-    ],
-    "params": {
-      "a_unsub_rate": 30,
-      "b_unsub_rate": 70,
-      "auth_string": "Bearer ABC123",
-      "rollover_threshold": 1000
-    }
-}
-```
-**Note**: The `params` field is optional and just allows you to change the default configuration values of the A/B Tester. These values are then propagated to their equivalent field in the application config. More on these values below.
+#### Docker Compose
+A/B Tester can also be deployer using Docker Compose. This deployment includes the New Relic Node.js agent and simulated web traffic.
+##### Prerequisites
+* Docker Compose
+  * On Windows and Mac, docker compose is included with [Docker desktop](https://docs.docker.com/desktop/)
+  * If you're on another operating system or would prefer to install docker compose by itself, [Docker Compose](https://docs.docker.com/compose/install/)
 
+To start a deployment:
+```shell
+NEW_RELIC_LICENSE_KEY=<your New Relic license key> docker-compose up -d 
+```
+
+To tear down a deployment:
+
+``` shell
+docker-compose down
+```
 
 ### Modifying the configuration
 The A/B test is driven through a configuration file. The default file is located here `config/app_config.js`.
