@@ -33,7 +33,7 @@ module.exports = (appConfig, routeA, routeB, newrelic) => {
     if (req.url !== '/') return next()
 
     if (isTestRunning) {
-      currentRoute = Math.random() < 0.5 ? routeA : routeB
+      currentRoute = Math.random() < 0.3 ? routeA : routeB
     }
     else {
       logger.info('Test ended, serving a')
