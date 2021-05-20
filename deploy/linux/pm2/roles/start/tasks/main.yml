@@ -1,0 +1,7 @@
+---
+
+- fail:
+    msg: "service_id is required"
+  when: service_id is not defined
+
+- include_tasks: cronjob.yml
