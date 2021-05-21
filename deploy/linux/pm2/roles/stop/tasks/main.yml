@@ -1,0 +1,9 @@
+---
+
+- fail:
+    msg: "service_id is required"
+  when: service_id is not defined
+
+- name: stop pm2
+  shell: cd /home/{{ ansible_user }}/{{ service_id }}; pm2 stop server.js
+  ignore_errors: true

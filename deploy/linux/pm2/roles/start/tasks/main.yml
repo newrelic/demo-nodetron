@@ -1,0 +1,10 @@
+---
+
+- fail:
+    msg: "service_id is required"
+  when: service_id is not defined
+
+- name: start pm2
+  shell: cd /home/{{ ansible_user }}/{{ service_id }}; pm2 start server.js -- config/app_config.json
+
+- include_tasks: cronjob.yml
