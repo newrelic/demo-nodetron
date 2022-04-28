@@ -3,3 +3,4 @@
 - include_tasks: installSupervisord.yml
 
 - include_tasks: installNodeJs.yml
+  when: nodejs_install is not defined or (nodejs_install | bool == True)
