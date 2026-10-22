@@ -1,4 +1,4 @@
-FROM node:22
+FROM node:lts
 
 RUN apt-get clean all
 RUN apt-get update
